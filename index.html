@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Wellbeing | Carmine Pio Fiola</title>
     
-    <meta property="og:title" content="Digital Wellbeing & Health - Carmine Pio Fiola">
-    <meta property="og:description" content="7 Risks and Solutions for a healthier digital life. 5°O Civic Education.">
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;400;600;900&display=swap');
+    <meta property="og:title" content="Digital Wellbeing - Carmine Pio Fiola">
+    <meta property="og:description" content="Civic Education Project: 7 Risks & Solutions.">
 
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
         :root {
             --neon-blue: #00f2ff;
             --neon-green: #00ff88;
             --neon-red: #ff3e3e;
-            --bg-dark: #08080c;
-            --glass: rgba(255, 255, 255, 0.05);
+            --bg-dark: #050505;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,225 +24,259 @@
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(0, 242, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(255, 62, 62, 0.1) 0%, transparent 40%);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
-            overflow-x: hidden;
             padding: 20px;
+            overflow: hidden;
         }
 
-        /* Sfondo animato con sfere di luce */
-        .bg-glow {
-            position: fixed;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            filter: blur(80px);
-            opacity: 0.4;
-        }
-        .glow-1 { position: absolute; top: 10%; left: 10%; width: 300px; height: 300px; background: var(--neon-blue); border-radius: 50%; animation: float 10s infinite; }
-        .glow-2 { position: absolute; bottom: 10%; right: 10%; width: 400px; height: 400px; background: var(--neon-red); border-radius: 50%; animation: float 15s infinite reverse; }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(50px, 100px); }
-        }
-
-        /* Header in stile Glassmorphism */
-        .header {
-            position: fixed;
-            top: 25px;
-            background: var(--glass);
-            backdrop-filter: blur(15px);
+        /* HEADER (Nome e Classe esterni alla locandina per evitare sovrapposizioni) */
+        .info-bar {
+            margin-bottom: 25px;
             padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
             border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.1);
-            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             gap: 20px;
             font-size: 0.9rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 10;
         }
-        .header strong { color: var(--neon-blue); }
+        .info-bar strong { color: var(--neon-blue); text-transform: uppercase; }
 
-        /* Contenitore Principale */
-        .main-container {
+        /* POSTER CONTAINER */
+        .poster-container {
             width: 100%;
             max-width: 500px;
-            height: 820px;
+            height: 780px;
             perspective: 2000px;
-            margin-top: 60px;
+            cursor: pointer;
         }
 
-        .card {
+        .poster-flip {
             width: 100%;
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-            cursor: pointer;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .card.flipped { transform: rotateY(-180deg); }
+        .poster-flip.is-flipped {
+            transform: rotateY(-180deg);
+        }
 
+        /* FACCE DELLA LOCANDINA */
         .face {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
             border-radius: 40px;
-            padding: 40px 25px;
+            padding: 35px 25px;
             display: flex;
             flex-direction: column;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
             overflow: hidden;
         }
 
-        /* Decorazione della faccia */
-        .face::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 6px;
+        .front {
+            background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+            border-top: 6px solid var(--neon-red);
         }
 
-        .front { background: #0c0c12; }
-        .front::before { background: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
-
-        .back { background: #0c120f; transform: rotateY(180deg); }
-        .back::before { background: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); }
+        .back {
+            background: linear-gradient(145deg, #050f0c, #0a1e18);
+            transform: rotateY(180deg);
+            border-top: 6px solid var(--neon-green);
+        }
 
         h1 {
             font-family: 'Syncopate', sans-serif;
             font-size: 1.5rem;
             text-align: center;
-            margin-bottom: 30px;
-            text-transform: uppercase;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
         }
 
-        /* Grid dei Punti */
-        .item-list { display: flex; flex-direction: column; gap: 12px; }
+        /* GRID DEI CONTENUTI */
+        .content-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
         .item {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 15px;
             border-radius: 20px;
+            padding: 12px 15px;
             display: flex;
             align-items: center;
             gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: 0.3s;
-            animation: fadeIn 0.5s ease forwards;
-            opacity: 0;
         }
-        .item:hover { background: rgba(255,255,255,0.07); transform: translateX(5px); }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.02);
+        }
 
-        /* Numeri stilizzati */
-        .circle-num {
-            min-width: 40px;
-            height: 40px;
+        .icon-box {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
-            background: rgba(255,255,255,0.05);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            font-family: 'Syncopate';
-            font-size: 0.9rem;
+            font-size: 1.2rem;
             color: var(--neon-blue);
             border: 1px solid rgba(0, 242, 255, 0.2);
         }
 
-        .content h3 { font-size: 0.9rem; color: #fff; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 1px; }
-        .content p { font-size: 0.75rem; color: #999; line-height: 1.4; }
-
-        /* Soluzioni (Back) */
-        .sol-box {
-            background: rgba(0, 255, 136, 0.05);
-            border: 1px solid rgba(0, 255, 136, 0.1);
-            padding: 12px 18px;
-            border-radius: 18px;
-            margin-bottom: 10px;
-            animation: fadeIn 0.5s ease forwards;
-            opacity: 0;
+        .text-box h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 2px;
         }
-        .sol-box strong { color: var(--neon-green); font-size: 0.8rem; display: block; margin-bottom: 2px; }
-        .sol-box p { font-size: 0.78rem; color: #ccc; }
 
-        .footer-hint {
+        .text-box p {
+            font-size: 0.75rem;
+            color: #aaa;
+            line-height: 1.3;
+        }
+
+        /* STILE SPECIFICO SOLUZIONI (Retro) */
+        .sol-item {
+            border-color: rgba(0, 255, 136, 0.2);
+        }
+        .sol-item .icon-box {
+            color: var(--neon-green);
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+
+        .hint {
             margin-top: auto;
             text-align: center;
             font-size: 0.65rem;
             letter-spacing: 4px;
             color: #555;
-            font-weight: 900;
+            text-transform: uppercase;
+            font-weight: 800;
         }
 
-        /* Delay animazioni */
-        .item:nth-child(1) { animation-delay: 0.1s; }
-        .item:nth-child(2) { animation-delay: 0.2s; }
-        .item:nth-child(3) { animation-delay: 0.3s; }
-        .item:nth-child(4) { animation-delay: 0.4s; }
-        .item:nth-child(5) { animation-delay: 0.5s; }
-        .item:nth-child(6) { animation-delay: 0.6s; }
-        .item:nth-child(7) { animation-delay: 0.7s; }
+        /* RESPONSIVE */
+        @media (max-width: 500px) {
+            .poster-container { height: 720px; }
+            h1 { font-size: 1.2rem; }
+            .info-bar { font-size: 0.7rem; padding: 10px 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow">
-        <div class="glow-1"></div>
-        <div class="glow-2"></div>
-    </div>
-
-    <div class="header">
+    <div class="info-bar">
         <div><strong>Carmine Pio Fiola</strong></div>
-        <div style="opacity: 0.4;">|</div>
+        <div style="opacity: 0.3;">|</div>
         <div>Class: <strong>5°O</strong></div>
-        <div style="opacity: 0.4;">|</div>
+        <div style="opacity: 0.3;">|</div>
         <div><strong>Civic Education</strong></div>
     </div>
 
-    <div class="main-container">
-        <div class="card" id="mainCard" onclick="flip()">
+    <div class="poster-container" onclick="toggleFlip()">
+        <div class="poster-flip" id="card">
             
             <div class="face front">
-                <h1 style="color: var(--neon-red)">Digital Risks</h1>
-                <div class="item-list">
-                    <div class="item"><div class="circle-num">01</div><div class="content"><h3>Toasted Skin</h3><p>Avoid burns by not placing laptops on bare skin.</p></div></div>
-                    <div class="item"><div class="circle-num">02</div><div class="content"><h3>Obesity</h3><p>Inactivity from screen time leads to weight gain.</p></div></div>
-                    <div class="item"><div class="circle-num">03</div><div class="content"><h3>Sleep Debt</h3><p>Blue light suppresses melatonin production.</p></div></div>
-                    <div class="item"><div class="circle-num">04</div><div class="content"><h3>Ear Damage</h3><p>Loud headphones (>85dB) cause permanent loss.</p></div></div>
-                    <div class="item"><div class="circle-num">05</div><div class="content"><h3>Joint Pain</h3><p>Messaging puts extreme stress on thumb joints.</p></div></div>
-                    <div class="item"><div class="circle-num">06</div><div class="content"><h3>Posture</h3><p>Slumped positions strain the spine and neck.</p></div></div>
-                    <div class="item"><div class="circle-num">07</div><div class="content"><h3>RSI Damage</h3><p>Wrist injury from repetitive mouse movements.</p></div></div>
+                <h1 style="color: var(--neon-red);">7 DIGITAL RISKS</h1>
+                
+                <div class="content-grid">
+                    <div class="item">
+                        <div class="icon-box"><i class="fa-solid fa-fire"></i></div>
+                        <div class="text-box"><h3>Toasted Skin</h3><p>Skin damage from laptop heat on bare knees.</p></div>
+                    </div>
+                    <div class="item">
+                        <div class="icon-box"><i class="fa-solid fa-weight-scale"></i></div>
+                        <div class="text-box"><h3>Obesity</h3><p>Inactivity from screen time leads to weight gain.</p></div>
+                    </div>
+                    <div class="item">
+                        <div class="icon-box"><i class="fa-solid fa-eye"></i></div>
+                        <div class="text-box"><h3>Sleep Debt</h3><p>Blue light suppresses melatonin, ruining sleep.</p></div>
+                    </div>
+                    <div class="item">
+                        <div class="icon-box"><i class="fa-solid fa-ear-listen"></i></div>
+                        <div class="text-box"><h3>Hearing Loss</h3><p>Permanent ear damage from loud headphones (>85dB).</p></div>
+                    </div>
+                    <div class="item">
+                        <div class="icon-box"><i class="fa-solid fa-hand-pointer"></i></div>
+                        <div class="text-box"><h3>Finger Stress</h3><p>Pain in finger joints from rapid messaging.</p></div>
+                    </div>
+                    <div class="item">
+                        <div class="icon-box"><i class="fa-solid fa-user-doctor"></i></div>
+                        <div class="text-box"><h3>Tech-Neck</h3><p>Spine strain caused by slumped posture.</p></div>
+                    </div>
+                    <div class="item">
+                        <div class="icon-box"><i class="fa-solid fa-bolt-lightning"></i></div>
+                        <div class="text-box"><h3>RSI Injury</h3><p>Wrist damage from repetitive mouse usage.</p></div>
+                    </div>
                 </div>
-                <div class="footer-hint">TAP TO SEE SOLUTIONS ➔</div>
+
+                <div class="hint">TAP TO SEE SOLUTIONS ➔</div>
             </div>
 
             <div class="face back">
-                <h1 style="color: var(--neon-green)">Smart Habits</h1>
-                <div class="item-list">
-                    <div class="sol-box"><strong>A. Use Lap Desks</strong><p>Keep your laptop on a table or protective surface.</p></div>
-                    <div class="sol-box"><strong>B. Stay Active</strong><p>Regular exercise prevents cardiovascular diseases.</p></div>
-                    <div class="sol-box"><strong>C. Night Filters</strong><p>Enable blue light filters 1 hour before sleeping.</p></div>
-                    <div class="sol-box"><strong>D. Volume Cap</strong><p>Limit audio to 60%. Protect your inner ear cells.</p></div>
-                    <div class="sol-box"><strong>E. Voice Input</strong><p>Use voice-to-text to give your thumbs a break.</p></div>
-                    <div class="sol-box"><strong>F. Eye Level</strong><p>Position your screen to keep your back straight.</p></div>
-                    <div class="sol-item" style="background: rgba(0, 255, 136, 0.05); padding: 12px; border-radius: 18px; border: 1px solid rgba(0,255,136,0.1);"><strong>G. Ergonomics</strong><p>Use ergonomic mice and take frequent breaks.</p></div>
+                <h1 style="color: var(--neon-green);">7 SMART HABITS</h1>
+
+                <div class="content-grid">
+                    <div class="item sol-item">
+                        <div class="icon-box"><i class="fa-solid fa-moon"></i></div>
+                        <div class="text-box"><h3>Night Filters</h3><p>Use blue light filters 1 hour before sleeping.</p></div>
+                    </div>
+                    <div class="item sol-item">
+                        <div class="icon-box"><i class="fa-solid fa-microphone"></i></div>
+                        <div class="text-box"><h3>Voice Input</h3><p>Use voice-to-text to rest your finger joints.</p></div>
+                    </div>
+                    <div class="item sol-item">
+                        <div class="icon-box"><i class="fa-solid fa-chair"></i></div>
+                        <div class="text-box"><h3>Ergonomics</h3><p>Keep back straight and monitor at eye level.</p></div>
+                    </div>
+                    <div class="item sol-item">
+                        <div class="icon-box"><i class="fa-solid fa-person-running"></i></div>
+                        <div class="text-box"><h3>Stay Active</h3><p>Combat obesity with regular physical exercise.</p></div>
+                    </div>
+                    <div class="item sol-item">
+                        <div class="icon-box"><i class="fa-solid fa-volume-xmark"></i></div>
+                        <div class="text-box"><h3>Volume Cap</h3><p>Limit audio to 60% to protect your hearing.</p></div>
+                    </div>
+                    <div class="item sol-item">
+                        <div class="icon-box"><i class="fa-solid fa-laptop"></i></div>
+                        <div class="text-box"><h3>Lap Protection</h3><p>Use a desk or a cooling pad for your laptop.</p></div>
+                    </div>
+                    <div class="item sol-item">
+                        <div class="icon-box"><i class="fa-solid fa-clock"></i></div>
+                        <div class="text-box"><h3>Take Breaks</h3><p>Rest your eyes and stretch every 20 minutes.</p></div>
+                    </div>
                 </div>
-                <div class="footer-hint" style="color: var(--neon-green)">TAP TO GO BACK ⬅</div>
+
+                <div class="hint" style="color: var(--neon-green);">TAP TO GO BACK ⬅</div>
             </div>
 
         </div>
     </div>
 
     <script>
-        function flip() {
-            document.getElementById('mainCard').classList.toggle('flipped');
+        function toggleFlip() {
+            document.getElementById('card').classList.toggle('is-flipped');
         }
     </script>
 
