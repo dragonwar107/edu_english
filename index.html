@@ -6,211 +6,260 @@
     <title>Digital Wellbeing | Carmine Pio Fiola</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --neon-blue: #00f2ff;
-            --neon-red: #ff3e3e;
-            --neon-green: #00ff88;
-            --bg-body: #0a0a0c;
+            --accent: #00f2ff;
+            --danger: #ff3e3e;
+            --safe: #00ff88;
+            --bg: #050508;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-body);
+            background: var(--bg);
             color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* 1. HEADER SEPARATO (Per evitare che il nome copra il testo) */
-        .top-header {
+        /* NAVBAR SUPERIORE - NOME E CLASSE (FISSI E PULITI) */
+        .status-bar {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 20px;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(10px);
+            z-index: 100;
         }
 
-        .top-header h2 { font-size: 0.9rem; font-family: 'Syncopate'; color: var(--neon-blue); }
-        .top-header p { font-size: 0.8rem; opacity: 0.7; font-weight: 600; }
+        .user-info h2 { font-family: 'Syncopate'; font-size: 0.8rem; color: var(--accent); }
+        .user-info p { font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* 2. AREA LOCANDINA */
-        .poster-wrapper {
-            margin-top: 40px;
-            width: 95%;
-            max-width: 500px;
-            height: 800px;
-            perspective: 2000px;
-            margin-bottom: 50px;
+        /* CONTENITORE LOCANDINA */
+        .scene {
+            margin: 40px 0;
+            width: 90vw;
+            max-width: 450px;
+            height: 750px;
+            perspective: 1500px;
         }
 
-        .poster-card {
+        .card {
             width: 100%;
             height: 100%;
             position: relative;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
         }
 
-        .poster-card.flipped { transform: rotateY(-180deg); }
+        .card.is-flipped { transform: rotateY(180deg); }
 
-        .face {
+        .card-face {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
             border-radius: 30px;
-            padding: 30px 20px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            overflow-y: auto; /* Permette lo scroll se il testo è tanto */
-        }
-
-        .front { background: #121216; border-top: 8px solid var(--neon-red); }
-        .back { background: #0c1412; border-top: 8px solid var(--neon-green); transform: rotateY(180deg); }
-
-        h1 { font-family: 'Syncopate'; font-size: 1.4rem; text-align: center; margin-bottom: 25px; }
-
-        /* 3. BOX DEI RISCHI CON IMMAGINI */
-        .risk-box {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 20px;
-            margin-bottom: 15px;
-            padding: 10px;
-            display: grid;
-            grid-template-columns: 80px 1fr;
-            gap: 15px;
-            align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .risk-box img {
-            width: 80px;
-            height: 80px;
-            border-radius: 12px;
-            object-fit: cover;
             border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .risk-content h3 { font-size: 0.9rem; color: var(--neon-blue); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-        .risk-content p { font-size: 0.75rem; color: #ccc; line-height: 1.3; }
-
-        /* 4. SOLUZIONI (Back) */
-        .sol-box {
-            background: rgba(0, 255, 136, 0.03);
-            border: 1px solid rgba(0, 255, 136, 0.1);
-            border-radius: 15px;
-            padding: 12px;
-            margin-bottom: 10px;
+            overflow: hidden;
             display: flex;
-            gap: 12px;
-            align-items: center;
+            flex-direction: column;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
-        .sol-box i { font-size: 1.2rem; color: var(--neon-green); }
-        .sol-box strong { font-size: 0.85rem; color: white; display: block; }
-        .sol-box p { font-size: 0.75rem; color: #aaa; }
+        /* FRONT: RISKS */
+        .card-front { background: #0a0a0f; }
+        
+        /* BACK: SOLUTIONS */
+        .card-back { background: #0a0f0d; transform: rotateY(180deg); }
 
-        .hint { text-align: center; font-size: 0.7rem; color: #555; margin-top: 20px; letter-spacing: 2px; }
+        .banner {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-size: cover;
+            position: relative;
+        }
 
+        .banner::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
+        .banner h1 { z-index: 1; font-family: 'Syncopate'; font-size: 1.2rem; letter-spacing: 3px; }
+
+        /* GRID DEI PUNTI CON IMMAGINI */
+        .items-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+        }
+
+        .visual-item {
+            position: relative;
+            height: 90px;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .visual-item img {
+            position: absolute;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            transition: 0.5s;
+        }
+
+        .visual-item:hover img { opacity: 0.7; transform: scale(1.1); }
+
+        .item-overlay {
+            position: relative;
+            z-index: 2;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0.8) 30%, transparent);
+        }
+
+        .icon-circle {
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .front .icon-circle { color: var(--danger); border-color: var(--danger); }
+        .back .icon-circle { color: var(--safe); border-color: var(--safe); }
+
+        .details h3 { font-size: 0.85rem; font-family: 'Syncopate'; margin-bottom: 2px; }
+        .details p { font-size: 0.75rem; color: #ddd; font-weight: 300; }
+
+        .footer-tag {
+            padding: 15px;
+            text-align: center;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #666;
+            background: rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 <body>
 
-    <div class="top-header">
-        <div>
-            <h2>Carmine Pio Fiola</h2>
-            <p>Subject: Civic Education</p>
+    <div class="status-bar">
+        <div class="user-info">
+            <h2>CARMINE PIO FIOLA</h2>
+            <p>Class 5°O | Digital Citizenship</p>
         </div>
-        <div>
-            <p>Class: <strong>5°O</strong></p>
-        </div>
+        <i class="fa-solid fa-microchip" style="color: var(--accent); font-size: 1.5rem;"></i>
     </div>
 
-    <div class="poster-wrapper">
-        <div class="poster-card" id="card" onclick="flipCard()">
+    <div class="scene">
+        <div class="card" id="mainCard" onclick="this.classList.toggle('is-flipped')">
             
-            <div class="face front">
-                <h1 style="color: var(--neon-red)">7 Digital Risks</h1>
-                
-                <div class="risk-box">
-                    <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=200&q=80" alt="Heat">
-                    <div class="risk-content">
-                        <h3><i class="fa-solid fa-fire"></i> Toasted Skin</h3>
-                        <p>Heat damage from placing laptops directly on bare skin.</p>
-                    </div>
+            <div class="card-face card-front">
+                <div class="banner" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80')">
+                    <h1 style="color: var(--danger)">7 RISKS</h1>
                 </div>
 
-                <div class="risk-box">
-                    <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=200&q=80" alt="Eyes">
-                    <div class="risk-content">
-                        <h3><i class="fa-solid fa-eye"></i> Sleep Debt</h3>
-                        <p>Blue light ruins melatonin levels and sleep cycles.</p>
+                <div class="items-container">
+                    <div class="visual-item">
+                        <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=300&q=60">
+                        <div class="item-overlay">
+                            <div class="icon-circle"><i class="fa-solid fa-fire"></i></div>
+                            <div class="details"><h3>Toasted Skin</h3><p>Heat damage from laptops on bare skin.</p></div>
+                        </div>
+                    </div>
+                    <div class="visual-item">
+                        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=300&q=60">
+                        <div class="item-overlay">
+                            <div class="icon-circle"><i class="fa-solid fa-weight-scale"></i></div>
+                            <div class="details"><h3>Obesity</h3><p>Sedentary habits lead to weight gain.</p></div>
+                        </div>
+                    </div>
+                    <div class="visual-item">
+                        <img src="https://images.unsplash.com/photo-1511295742364-917e704b624e?auto=format&fit=crop&w=300&q=60">
+                        <div class="item-overlay">
+                            <div class="icon-circle"><i class="fa-solid fa-moon"></i></div>
+                            <div class="details"><h3>Sleep Debt</h3><p>Blue light ruins melatonin & rest.</p></div>
+                        </div>
+                    </div>
+                    <div class="visual-item">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=300&q=60">
+                        <div class="item-overlay">
+                            <div class="icon-circle"><i class="fa-solid fa-ear-deaf"></i></div>
+                            <div class="details"><h3>Hearing Loss</h3><p>High volume damage (>85dB).</p></div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="risk-box">
-                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=200&q=80" alt="Neck">
-                    <div class="risk-content">
-                        <h3><i class="fa-solid fa-child-reaching"></i> Tech-Neck</h3>
-                        <p>Posture strain on the spine and neck muscles.</p>
-                    </div>
-                </div>
-
-                <div class="risk-box">
-                    <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=200&q=80" alt="Ears">
-                    <div class="risk-content">
-                        <h3><i class="fa-solid fa-ear-listen"></i> Hearing Loss</h3>
-                        <p>Damage from high volume in headphones (>85dB).</p>
-                    </div>
-                </div>
-
-                <div class="hint">CLICCA PER LE SOLUZIONI ➔</div>
+                <div class="footer-tag">CLICK TO REVEAL SOLUTIONS ➔</div>
             </div>
 
-            <div class="face back">
-                <h1 style="color: var(--neon-green)">Smart Solutions</h1>
-                
-                <div class="sol-box">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <div><strong>Night Filters</strong><p>Use blue light filters before bedtime.</p></div>
-                </div>
-                <div class="sol-box">
-                    <i class="fa-solid fa-microphone"></i>
-                    <div><strong>Voice Input</strong><p>Use dictation to rest your finger joints.</p></div>
-                </div>
-                <div class="sol-box">
-                    <i class="fa-solid fa-chair"></i>
-                    <div><strong>Ergonomics</strong><p>Keep the monitor at eye level and back straight.</p></div>
-                </div>
-                <div class="sol-box">
-                    <i class="fa-solid fa-person-running"></i>
-                    <div><strong>Stay Active</strong><p>Combat inactivity with regular exercise.</p></div>
-                </div>
-                <div class="sol-box">
-                    <i class="fa-solid fa-volume-low"></i>
-                    <div><strong>Volume Cap</strong><p>Limit audio to 60% to protect hearing.</p></div>
+            <div class="card-face card-back">
+                <div class="banner" style="background-image: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80')">
+                    <h1 style="color: var(--safe)">7 HABITS</h1>
                 </div>
 
-                <div class="hint">CLICCA PER TORNARE AI RISCHI ⬅</div>
+                <div class="items-container">
+                    <div class="visual-item">
+                        <img src="https://images.unsplash.com/photo-1585241936939-be4099591252?auto=format&fit=crop&w=300&q=60">
+                        <div class="item-overlay">
+                            <div class="icon-circle"><i class="fa-solid fa-eye"></i></div>
+                            <div class="details"><h3>Night Mode</h3><p>Use blue light filters before bed.</p></div>
+                        </div>
+                    </div>
+                    <div class="visual-item">
+                        <img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=300&q=60">
+                        <div class="item-overlay">
+                            <div class="icon-circle"><i class="fa-solid fa-microphone"></i></div>
+                            <div class="details"><h3>Voice To Text</h3><p>Rest your joints using dictation.</p></div>
+                        </div>
+                    </div>
+                    <div class="visual-item">
+                        <img src="https://images.unsplash.com/photo-1541170155377-5099046e3922?auto=format&fit=crop&w=300&q=60">
+                        <div class="item-overlay">
+                            <div class="icon-circle"><i class="fa-solid fa-chair"></i></div>
+                            <div class="details"><h3>Postural Care</h3><p>Monitor at eye level, back straight.</p></div>
+                        </div>
+                    </div>
+                    <div class="visual-item">
+                        <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=300&q=60">
+                        <div class="item-overlay">
+                            <div class="icon-circle"><i class="fa-solid fa-person-running"></i></div>
+                            <div class="details"><h3>Exercise</h3><p>Stay active to combat diseases.</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-tag">BACK TO RISKS ⬅</div>
             </div>
 
         </div>
     </div>
 
-    <script>
-        function flipCard() {
-            document.getElementById('card').classList.toggle('flipped');
-        }
-    </script>
 </body>
 </html>
