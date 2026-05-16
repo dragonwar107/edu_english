@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Wellbeing Poster | Carmine Pio Fiola</title>
+    <title>Digital Wellbeing | Carmine Pio Fiola</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
@@ -13,217 +13,228 @@
             --accent: #00f2ff;
             --danger: #ff3e3e;
             --safe: #00ff88;
-            --bg-wall: #1a1a1a; /* Colore del "muro" dietro */
-            --poster-white: #f0f0f0; /* Bordo della locandina */
+            --bg: #030305;
+            --card-bg: #0a0a0f;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: var(--bg-wall);
-            background-image: radial-gradient(#333 1px, transparent 1px);
-            background-size: 20px 20px; /* Effetto muro puntinato */
-            color: #111;
+            background: var(--bg);
+            color: white;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
-        /* TARGHETTA NOME ESTERNA (Non copre la locandina) */
-        .author-tag {
-            background: #fff;
-            padding: 10px 25px;
-            border-radius: 5px;
-            box-shadow: 5px 5px 0px var(--accent);
-            margin-bottom: 30px;
-            border: 2px solid #111;
-        }
-        .author-tag h2 { font-family: 'Syncopate'; font-size: 0.8rem; }
-        .author-tag p { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
-
-        /* SCENA 3D */
-        .poster-scene {
+        /* STRUTTURA LOCANDINA */
+        .poster-container {
             width: 100%;
-            max-width: 500px;
-            height: 900px;
+            max-width: 480px;
+            height: 880px;
             perspective: 2000px;
         }
 
-        .poster-flip {
+        .card {
             width: 100%;
             height: 100%;
             position: relative;
-            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
             transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
             cursor: pointer;
         }
 
-        .poster-flip.is-flipped { transform: rotateY(180deg); }
+        .card.flipped { transform: rotateY(180deg); }
 
-        /* LA LOCANDINA FISICA */
-        .poster-face {
+        .face {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            background: var(--poster-white);
-            border: 15px solid white; /* Il bordo della locandina */
-            box-shadow: 20px 20px 60px rgba(0,0,0,0.5);
+            border-radius: 35px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
 
-        .poster-back { transform: rotateY(180deg); }
-
-        /* INTESTAZIONE LOCANDINA */
+        /* HEADER INTEGRATO (IL NOME NON COPRE IL TESTO) */
         .poster-header {
-            padding: 20px;
+            padding: 25px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
-            background: #111;
-            color: white;
         }
-        .poster-header h1 { font-family: 'Syncopate'; font-size: 1.2rem; }
-        .front-header { border-bottom: 5px solid var(--danger); }
-        .back-header { border-bottom: 5px solid var(--safe); }
 
-        /* CONTENUTO */
-        .items-area {
-            flex: 1;
+        .poster-header h2 { font-family: 'Syncopate'; font-size: 0.8rem; color: var(--accent); margin-bottom: 5px; }
+        .poster-header p { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; }
+
+        .front { background: var(--card-bg); }
+        .back { background: #070c0a; transform: rotateY(180deg); }
+
+        /* TITOLI SEZIONE */
+        .title-area {
             padding: 15px;
+            text-align: center;
+        }
+        .title-area h1 { font-family: 'Syncopate'; font-size: 1.5rem; letter-spacing: 3px; }
+
+        /* LISTA PUNTI (7 RISCHI / 7 SOLUZIONI) */
+        .scroll-area {
+            flex: 1;
+            padding: 10px 15px;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            background-color: #fff;
         }
 
-        .risk-item {
+        .item {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 10px;
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 8px;
-            background: #f9f9f9;
-            border: 1px solid #eee;
-            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
         }
 
-        .risk-item img {
-            width: 65px;
-            height: 65px;
+        .item img {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
             object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid #ddd;
+            filter: grayscale(40%);
         }
 
-        .risk-info h3 { font-size: 0.8rem; font-family: 'Syncopate'; color: #333; margin-bottom: 2px; }
-        .risk-info p { font-size: 0.7rem; color: #666; line-height: 1.2; }
-        .risk-info i { margin-right: 5px; }
+        .icon-tag {
+            position: absolute;
+            top: 5px; right: 10px;
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
 
-        /* FOOTER LOCANDINA */
-        .poster-footer {
+        .item-info h3 { font-size: 0.85rem; font-family: 'Syncopate'; margin-bottom: 2px; }
+        .item-info p { font-size: 0.75rem; color: #aaa; line-height: 1.2; }
+
+        /* COLORI */
+        .front h1, .front .item-info h3 { color: var(--danger); }
+        .back h1, .back .item-info h3 { color: var(--safe); }
+
+        .footer-hint {
             padding: 15px;
-            background: #eee;
             text-align: center;
             font-size: 0.6rem;
-            font-weight: 900;
+            letter-spacing: 3px;
+            color: #444;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
-        /* COLORI SPECIFICI */
-        .risk-icon { color: var(--danger); }
-        .habit-icon { color: var(--safe); }
+        /* EFFETTO RIFLESSO */
+        .face::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent);
+            transform: skewX(-25deg);
+            transition: 0.7s;
+        }
+        .card:hover .face::before { left: 150%; }
+
     </style>
 </head>
 <body>
 
-    <div class="author-tag">
-        <h2>CARMINE PIO FIOLA</h2>
-        <p>Class 5°O | Civic Education Project</p>
-    </div>
-
-    <div class="poster-scene">
-        <div class="poster-flip" onclick="this.classList.toggle('is-flipped')">
+    <div class="poster-container">
+        <div class="card" id="myCard" onclick="this.classList.toggle('flipped')">
             
-            <div class="poster-face">
-                <div class="poster-header front-header">
-                    <h1>7 DIGITAL RISKS</h1>
+            <div class="face front">
+                <div class="poster-header">
+                    <h2>CARMINE PIO FIOLA</h2>
+                    <p>Class 5°O | Civic Education Project</p>
                 </div>
+                
+                <div class="title-area"><h1>7 RISKS</h1></div>
 
-                <div class="items-area">
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-fire risk-icon"></i>Toasted Skin</h3><p>Skin damage from laptop heat on bare skin.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-weight-scale risk-icon"></i>Obesity</h3><p>Inactivity from excessive screen usage.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1511295742364-917e704b624e?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-moon risk-icon"></i>Sleep Debt</h3><p>Blue light ruins melatonin levels.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-ear-deaf risk-icon"></i>Hearing Loss</h3><p>Damage from high volume (>85dB).</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-hand-pointer risk-icon"></i>Finger Stress</h3><p>Messaging joint strain and pain.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1541170155377-5099046e3922?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-user-doctor risk-icon"></i>Tech-Neck</h3><p>Spine strain from slumped posture.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1516339901600-2e1a62dc0c45?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-bolt risk-icon"></i>RSI Injury</h3><p>Wrist damage from mouse usage.</p></div>
-                    </div>
+                <div class="scroll-area">
+                    <div class="item"><img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=100">
+                        <div class="item-info"><h3>Toasted Skin</h3><p>Heat damage from laptops on bare skin.</p></div>
+                        <i class="fa-solid fa-fire icon-tag"></i></div>
+                    
+                    <div class="item"><img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=100">
+                        <div class="item-info"><h3>Obesity</h3><p>Inactivity due to excessive screen time.</p></div>
+                        <i class="fa-solid fa-weight-scale icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1511295742364-917e704b624e?w=100">
+                        <div class="item-info"><h3>Sleep Debt</h3><p>Blue light ruins melatonin & sleep cycles.</p></div>
+                        <i class="fa-solid fa-moon icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100">
+                        <div class="item-info"><h3>Hearing Loss</h3><p>Permanent damage from loud headphones.</p></div>
+                        <i class="fa-solid fa-ear-deaf icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=100">
+                        <div class="item-info"><h3>Finger Stress</h3><p>Joint pain from repetitive messaging.</p></div>
+                        <i class="fa-solid fa-hand-pointer icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1541170155377-5099046e3922?w=100">
+                        <div class="item-info"><h3>Tech-Neck</h3><p>Spine strain from slumped posture.</p></div>
+                        <i class="fa-solid fa-user-doctor icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1516339901600-2e1a62dc0c45?w=100">
+                        <div class="item-info"><h3>RSI Injury</h3><p>Wrist damage from intensive mouse usage.</p></div>
+                        <i class="fa-solid fa-bolt icon-tag"></i></div>
                 </div>
-
-                <div class="poster-footer">CLICCA PER GIRARE LA LOCANDINA ➔</div>
+                
+                <div class="footer-hint">TAP TO FLIP ➔</div>
             </div>
 
-            <div class="poster-face poster-back">
-                <div class="poster-header back-header">
-                    <h1>7 SMART HABITS</h1>
+            <div class="face back">
+                <div class="poster-header">
+                    <h2>CARMINE PIO FIOLA</h2>
+                    <p>Class 5°O | Smart Solutions</p>
                 </div>
 
-                <div class="items-area">
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1585241936939-be4099591252?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-eye habit-icon"></i>Night Filters</h3><p>Use filters 1 hour before sleep.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-microphone habit-icon"></i>Voice Input</h3><p>Rest your joints using dictation.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-chair habit-icon"></i>Ergonomics</h3><p>Monitor at eye level, back straight.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-person-running habit-icon"></i>Exercise</h3><p>Stay active to combat inactivity.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1516339901600-2e1a62dc0c45?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-volume-low habit-icon"></i>Volume Cap</h3><p>Limit audio to 60% max.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1587614382346-4ec706388b28?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-laptop habit-icon"></i>Lap Desks</h3><p>Use tables instead of knees.</p></div>
-                    </div>
-                    <div class="risk-item">
-                        <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=100">
-                        <div class="risk-info"><h3><i class="fa-solid fa-clock habit-icon"></i>Breaks</h3><p>Stretch every 20 minutes.</p></div>
-                    </div>
+                <div class="title-area"><h1>7 HABITS</h1></div>
+
+                <div class="scroll-area">
+                    <div class="item"><img src="https://images.unsplash.com/photo-1585241936939-be4099591252?w=100">
+                        <div class="item-info"><h3>Night Filters</h3><p>Use filters 1 hour before sleep.</p></div>
+                        <i class="fa-solid fa-eye icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=100">
+                        <div class="item-info"><h3>Voice Input</h3><p>Use dictation to rest your finger joints.</p></div>
+                        <i class="fa-solid fa-microphone icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=100">
+                        <div class="item-info"><h3>Ergonomics</h3><p>Keep the monitor at eye level.</p></div>
+                        <i class="fa-solid fa-chair icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=100">
+                        <div class="item-info"><h3>Stay Active</h3><p>Exercise daily to combat inactivity.</p></div>
+                        <i class="fa-solid fa-person-running icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1516339901600-2e1a62dc0c45?w=100">
+                        <div class="item-info"><h3>Volume Cap</h3><p>Limit audio to 60% of max volume.</p></div>
+                        <i class="fa-solid fa-volume-low icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1587614382346-4ec706388b28?w=100">
+                        <div class="item-info"><h3>Lap Desks</h3><p>Always use a table or a cooling pad.</p></div>
+                        <i class="fa-solid fa-laptop icon-tag"></i></div>
+
+                    <div class="item"><img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=100">
+                        <div class="item-info"><h3>Take Breaks</h3><p>Stretch every 20 minutes of use.</p></div>
+                        <i class="fa-solid fa-clock icon-tag"></i></div>
                 </div>
 
-                <div class="poster-footer">CLICCA PER TORNARE AI RISCHI ⬅</div>
+                <div class="footer-hint">BACK TO RISKS ⬅</div>
             </div>
 
         </div>
