@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Wellbeing | Carmine Pio Fiola</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@400;600;800&display=swap');
+
+        :root {
+            --accent-blue: #00f2ff;
+            --accent-green: #00ff88;
+            --danger: #ff3e3e;
+            --text-main: #ffffff;
+            --text-dim: #cccccc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #000;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(0, 242, 255, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(0, 255, 136, 0.1) 0%, transparent 45%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-main);
+            padding: 20px;
+            /* Impedisce lo scroll accidentale su mobile mentre si gira la card */
+            touch-action: manipulation;
+        }
+
+        .header-info {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(15px);
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            z-index: 100;
+            font-size: 0.8rem;
+        }
+
+        .header-info span { color: var(--accent-blue); font-weight: 800; }
+
+        /* Contenitore Adattivo */
+        .poster-box {
+            width: 100%;
+            max-width: 480px; /* Larghezza max su PC */
+            aspect-ratio: 2 / 3.2; /* Mantiene le proporzioni */
+            perspective: 2000px;
+            margin-top: 50px;
+        }
+
+        .poster-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        /* Supporto sia per Mouse che per Touch */
+        .poster-box:hover .poster-inner, 
+        .poster-box:active .poster-inner {
+            transform: rotateY(-180deg);
+        }
+
+        .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 25px;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid rgba(255,255,255,0.15);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .front { background: #0a0a0a; }
+        .back {
+            background: #00120b;
+            transform: rotateY(180deg);
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+
+        h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Righe ottimizzate per schermi piccoli */
+        .row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 15px;
+            align-items: center;
+        }
+
+        .id-num { font-size: 1.1rem; color: var(--accent-blue); font-weight: 800; }
+        .info h3 { font-size: 0.85rem; color: #fff; margin-bottom: 2px; }
+        .info p { font-size: 0.75rem; color: var(--text-dim); line-height: 1.2; }
+
+        /* Soluzioni lato B */
+        .solution {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            padding: 10px 15px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .solution strong { color: var(--accent-green); font-size: 0.75rem; display: block; }
+        .solution p { font-size: 0.75rem; color: #eee; }
+
+        .footer {
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            opacity: 0.6;
+        }
+
+        /* MEDIA QUERIES PER TABLET E PC */
+        @media (min-width: 600px) {
+            .header-info { font-size: 1.1rem; padding: 15px; }
+            h1 { font-size: 1.8rem; }
+            .id-num { font-size: 1.4rem; }
+            .info h3 { font-size: 1rem; }
+            .info p { font-size: 0.85rem; }
+            .solution strong { font-size: 0.9rem; }
+            .solution p { font-size: 0.85rem; }
+            .face { padding: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-info">
+        <span>Carmine Pio Fiola</span> | Class: <span>5°O</span> | <span>Civic Education</span>
+    </div>
+
+    <div class="poster-box">
+        <div class="poster-inner">
+            
+            <div class="face front">
+                <h1>7 DIGITAL RISKS</h1>
+                
+                <div class="row"><div class="id-num">1</div><div class="info"><h3>Toasted Skin</h3><p>Heat damage from laptops on knees.</p></div></div>
+                <div class="row"><div class="id-num">2</div><div class="info"><h3>Obesity</h3><p>Inactivity caused by screen time.</p></div></div>
+                <div class="row"><div class="id-num">3</div><div class="info"><h3>Sleep & Eyes</h3><p>Blue light disrupts melatonin.</p></div></div>
+                <div class="row"><div class="id-num">4</div><div class="info"><h3>Hearing</h3><p>Loud headphones above 85dB.</p></div></div>
+                <div class="row"><div class="id-num">5</div><div class="info"><h3>Finger Stress</h3><p>Repetitive messaging pain.</p></div></div>
+                <div class="row"><div class="id-num">6</div><div class="info"><h3>Back & Neck</h3><p>Slumped sitting strains joints.</p></div></div>
+                <div class="row"><div class="id-num">7</div><div class="info"><h3>RSI Damage</h3><p>Wrist pain from mouse usage.</p></div></div>
+
+                <div class="footer" style="color: var(--danger);">TAP OR HOVER TO FLIP ➔</div>
+            </div>
+
+            <div class="face back">
+                <h1>7 SOLUTIONS</h1>
+                <div class="solution"><strong>A. Display</strong><p>Use filters and take regular breaks.</p></div>
+                <div class="solution"><strong>B. Input</strong><p>Use voice-to-text to reduce strain.</p></div>
+                <div class="solution"><strong>C. Posture</strong><p>Sit straight, monitor at eye level.</p></div>
+                <div class="solution"><strong>D. Exercise</strong><p>Stay active to prevent obesity.</p></div>
+                <div class="solution"><strong>E. Ergonomics</strong><p>Use supports for affected parts.</p></div>
+                <div class="solution"><strong>F. Laptop</strong><p>Always use a desk or a 'lap desk'.</p></div>
+                <div class="solution"><strong>G. Volume</strong><p>Cap volume. Ringing ears is a sign.</p></div>
+                <div class="footer" style="color: var(--accent-green);">TAP TO GO BACK</div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
