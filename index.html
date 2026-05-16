@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Wellbeing | Carmine Pio Fiola</title>
+    <title>Digital Wellbeing Poster | Carmine Pio Fiola</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
@@ -13,230 +13,217 @@
             --accent: #00f2ff;
             --danger: #ff3e3e;
             --safe: #00ff88;
-            --bg: #050508;
+            --bg-wall: #1a1a1a; /* Colore del "muro" dietro */
+            --poster-white: #f0f0f0; /* Bordo della locandina */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: var(--bg);
-            color: white;
+            background: var(--bg-wall);
+            background-image: radial-gradient(#333 1px, transparent 1px);
+            background-size: 20px 20px; /* Effetto muro puntinato */
+            color: #111;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            padding: 40px 20px;
         }
 
-        /* NAVBAR SUPERIORE - NOME E CLASSE (FISSI E PULITI) */
-        .status-bar {
+        /* TARGHETTA NOME ESTERNA (Non copre la locandina) */
+        .author-tag {
+            background: #fff;
+            padding: 10px 25px;
+            border-radius: 5px;
+            box-shadow: 5px 5px 0px var(--accent);
+            margin-bottom: 30px;
+            border: 2px solid #111;
+        }
+        .author-tag h2 { font-family: 'Syncopate'; font-size: 0.8rem; }
+        .author-tag p { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
+
+        /* SCENA 3D */
+        .poster-scene {
             width: 100%;
-            padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-        }
-
-        .user-info h2 { font-family: 'Syncopate'; font-size: 0.8rem; color: var(--accent); }
-        .user-info p { font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; }
-
-        /* CONTENITORE LOCANDINA */
-        .scene {
-            margin: 30px 0;
-            width: 95vw;
-            max-width: 480px;
-            height: 850px; /* Altezza aumentata per contenere tutti i 7 punti */
+            max-width: 500px;
+            height: 900px;
             perspective: 2000px;
         }
 
-        .card {
+        .poster-flip {
             width: 100%;
             height: 100%;
             position: relative;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
             transform-style: preserve-3d;
             cursor: pointer;
         }
 
-        .card.is-flipped { transform: rotateY(180deg); }
+        .poster-flip.is-flipped { transform: rotateY(180deg); }
 
-        .card-face {
+        /* LA LOCANDINA FISICA */
+        .poster-face {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--poster-white);
+            border: 15px solid white; /* Il bordo della locandina */
+            box-shadow: 20px 20px 60px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
-        /* FRONT: RISKS & BACK: SOLUTIONS */
-        .card-front { background: #0a0a0f; }
-        .card-back { background: #0a0f0d; transform: rotateY(180deg); }
+        .poster-back { transform: rotateY(180deg); }
 
-        .banner {
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            background-size: cover;
-            background-position: center;
-            position: relative;
+        /* INTESTAZIONE LOCANDINA */
+        .poster-header {
+            padding: 20px;
+            text-align: center;
+            background: #111;
+            color: white;
         }
+        .poster-header h1 { font-family: 'Syncopate'; font-size: 1.2rem; }
+        .front-header { border-bottom: 5px solid var(--danger); }
+        .back-header { border-bottom: 5px solid var(--safe); }
 
-        .banner::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
-        .banner h1 { z-index: 1; font-family: 'Syncopate'; font-size: 1.4rem; letter-spacing: 3px; }
-
-        /* GRID DEI PUNTI CON IMMAGINI */
-        .items-container {
+        /* CONTENUTO */
+        .items-area {
             flex: 1;
             padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            overflow-y: auto;
+            gap: 10px;
+            background-color: #fff;
         }
 
-        .visual-item {
-            position: relative;
-            min-height: 85px;
-            border-radius: 18px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .visual-item img {
-            position: absolute;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0.35;
-        }
-
-        .item-overlay {
-            position: relative;
-            z-index: 2;
-            padding: 12px;
+        .risk-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            width: 100%;
-            background: linear-gradient(90deg, rgba(0,0,0,0.85) 40%, transparent);
+            padding: 8px;
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 10px;
         }
 
-        .icon-circle {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            flex-shrink: 0;
+        .risk-item img {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #ddd;
         }
 
-        .front .icon-circle { color: var(--danger); border-color: var(--danger); }
-        .back .icon-circle { color: var(--safe); border-color: var(--safe); }
+        .risk-info h3 { font-size: 0.8rem; font-family: 'Syncopate'; color: #333; margin-bottom: 2px; }
+        .risk-info p { font-size: 0.7rem; color: #666; line-height: 1.2; }
+        .risk-info i { margin-right: 5px; }
 
-        .details h3 { font-size: 0.8rem; font-family: 'Syncopate'; margin-bottom: 2px; }
-        .details p { font-size: 0.75rem; color: #bbb; line-height: 1.2; }
-
-        .footer-tag {
-            padding: 12px;
+        /* FOOTER LOCANDINA */
+        .poster-footer {
+            padding: 15px;
+            background: #eee;
             text-align: center;
             font-size: 0.6rem;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #666;
-            background: rgba(0,0,0,0.3);
+            letter-spacing: 2px;
         }
+
+        /* COLORI SPECIFICI */
+        .risk-icon { color: var(--danger); }
+        .habit-icon { color: var(--safe); }
     </style>
 </head>
 <body>
 
-    <div class="status-bar">
-        <div class="user-info">
-            <h2>CARMINE PIO FIOLA</h2>
-            <p>Class 5°O | Civic Education</p>
-        </div>
-        <i class="fa-solid fa-laptop-medical" style="color: var(--accent); font-size: 1.4rem;"></i>
+    <div class="author-tag">
+        <h2>CARMINE PIO FIOLA</h2>
+        <p>Class 5°O | Civic Education Project</p>
     </div>
 
-    <div class="scene">
-        <div class="card" id="mainCard" onclick="this.classList.toggle('is-flipped')">
+    <div class="poster-scene">
+        <div class="poster-flip" onclick="this.classList.toggle('is-flipped')">
             
-            <div class="card-face card-front">
-                <div class="banner" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500')">
-                    <h1 style="color: var(--danger)">7 RISKS</h1>
+            <div class="poster-face">
+                <div class="poster-header front-header">
+                    <h1>7 DIGITAL RISKS</h1>
                 </div>
 
-                <div class="items-container">
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-fire"></i></div><div class="details"><h3>Toasted Skin</h3><p>Heat damage from laptops on bare skin.</p></div></div>
+                <div class="items-area">
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-fire risk-icon"></i>Toasted Skin</h3><p>Skin damage from laptop heat on bare skin.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-weight-scale"></i></div><div class="details"><h3>Obesity</h3><p>Sedentary lifestyle from screen time.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-weight-scale risk-icon"></i>Obesity</h3><p>Inactivity from excessive screen usage.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1511295742364-917e704b624e?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-moon"></i></div><div class="details"><h3>Sleep Debt</h3><p>Blue light ruins melatonin & sleep cycles.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1511295742364-917e704b624e?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-moon risk-icon"></i>Sleep Debt</h3><p>Blue light ruins melatonin levels.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-ear-deaf"></i></div><div class="details"><h3>Hearing Loss</h3><p>High volume damage (>85dB).</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-ear-deaf risk-icon"></i>Hearing Loss</h3><p>Damage from high volume (>85dB).</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-hand-pointer"></i></div><div class="details"><h3>Finger Stress</h3><p>Repetitive messaging joint pain.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-hand-pointer risk-icon"></i>Finger Stress</h3><p>Messaging joint strain and pain.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1541170155377-5099046e3922?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-user-doctor"></i></div><div class="details"><h3>Tech-Neck</h3><p>Spine strain from slumped posture.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1541170155377-5099046e3922?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-user-doctor risk-icon"></i>Tech-Neck</h3><p>Spine strain from slumped posture.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1513035909775-395849?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-bolt"></i></div><div class="details"><h3>RSI Injury</h3><p>Wrist damage from mouse usage.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1516339901600-2e1a62dc0c45?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-bolt risk-icon"></i>RSI Injury</h3><p>Wrist damage from mouse usage.</p></div>
                     </div>
                 </div>
-                <div class="footer-tag">CLICK TO REVEAL SOLUTIONS ➔</div>
+
+                <div class="poster-footer">CLICCA PER GIRARE LA LOCANDINA ➔</div>
             </div>
 
-            <div class="card-face card-back">
-                <div class="banner" style="background-image: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500')">
-                    <h1 style="color: var(--safe)">7 HABITS</h1>
+            <div class="poster-face poster-back">
+                <div class="poster-header back-header">
+                    <h1>7 SMART HABITS</h1>
                 </div>
 
-                <div class="items-container">
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1585241936939-be4099591252?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-eye"></i></div><div class="details"><h3>Night Filters</h3><p>Use blue light filters before bed.</p></div></div>
+                <div class="items-area">
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1585241936939-be4099591252?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-eye habit-icon"></i>Night Filters</h3><p>Use filters 1 hour before sleep.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-microphone"></i></div><div class="details"><h3>Voice To Text</h3><p>Use dictation to rest finger joints.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-microphone habit-icon"></i>Voice Input</h3><p>Rest your joints using dictation.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-chair"></i></div><div class="details"><h3>Ergonomics</h3><p>Monitor at eye level, back straight.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-chair habit-icon"></i>Ergonomics</h3><p>Monitor at eye level, back straight.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-person-running"></i></div><div class="details"><h3>Exercise</h3><p>Stay active to combat inactivity.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-person-running habit-icon"></i>Exercise</h3><p>Stay active to combat inactivity.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1516339901600-2e1a62dc0c45?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-volume-low"></i></div><div class="details"><h3>Volume Cap</h3><p>Limit audio to protect inner ear cells.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1516339901600-2e1a62dc0c45?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-volume-low habit-icon"></i>Volume Cap</h3><p>Limit audio to 60% max.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1587614382346-4ec706388b28?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-laptop"></i></div><div class="details"><h3>Lap Desks</h3><p>Use protective tables for laptops.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1587614382346-4ec706388b28?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-laptop habit-icon"></i>Lap Desks</h3><p>Use tables instead of knees.</p></div>
                     </div>
-                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=200">
-                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-clock"></i></div><div class="details"><h3>Breaks</h3><p>Stretch every 20 minutes of work.</p></div></div>
+                    <div class="risk-item">
+                        <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=100">
+                        <div class="risk-info"><h3><i class="fa-solid fa-clock habit-icon"></i>Breaks</h3><p>Stretch every 20 minutes.</p></div>
                     </div>
                 </div>
-                <div class="footer-tag">BACK TO RISKS ⬅</div>
+
+                <div class="poster-footer">CLICCA PER TORNARE AI RISCHI ⬅</div>
             </div>
 
         </div>
