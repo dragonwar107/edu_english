@@ -32,7 +32,7 @@
         /* NAVBAR SUPERIORE - NOME E CLASSE (FISSI E PULITI) */
         .status-bar {
             width: 100%;
-            padding: 20px 40px;
+            padding: 15px 30px;
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -47,11 +47,11 @@
 
         /* CONTENITORE LOCANDINA */
         .scene {
-            margin: 40px 0;
-            width: 90vw;
-            max-width: 450px;
-            height: 750px;
-            perspective: 1500px;
+            margin: 30px 0;
+            width: 95vw;
+            max-width: 480px;
+            height: 850px; /* Altezza aumentata per contenere tutti i 7 punti */
+            perspective: 2000px;
         }
 
         .card {
@@ -78,44 +78,42 @@
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
-        /* FRONT: RISKS */
+        /* FRONT: RISKS & BACK: SOLUTIONS */
         .card-front { background: #0a0a0f; }
-        
-        /* BACK: SOLUTIONS */
         .card-back { background: #0a0f0d; transform: rotateY(180deg); }
 
         .banner {
-            height: 120px;
+            height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             background-size: cover;
+            background-position: center;
             position: relative;
         }
 
-        .banner::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
-        .banner h1 { z-index: 1; font-family: 'Syncopate'; font-size: 1.2rem; letter-spacing: 3px; }
+        .banner::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
+        .banner h1 { z-index: 1; font-family: 'Syncopate'; font-size: 1.4rem; letter-spacing: 3px; }
 
         /* GRID DEI PUNTI CON IMMAGINI */
         .items-container {
             flex: 1;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             overflow-y: auto;
         }
 
         .visual-item {
             position: relative;
-            height: 90px;
-            border-radius: 20px;
+            min-height: 85px;
+            border-radius: 18px;
             overflow: hidden;
             display: flex;
             align-items: center;
             border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
         }
 
         .visual-item img {
@@ -123,43 +121,40 @@
             left: 0; top: 0;
             width: 100%; height: 100%;
             object-fit: cover;
-            opacity: 0.4;
-            transition: 0.5s;
+            opacity: 0.35;
         }
-
-        .visual-item:hover img { opacity: 0.7; transform: scale(1.1); }
 
         .item-overlay {
             position: relative;
             z-index: 2;
-            padding: 15px;
+            padding: 12px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             width: 100%;
-            background: linear-gradient(90deg, rgba(0,0,0,0.8) 30%, transparent);
+            background: linear-gradient(90deg, rgba(0,0,0,0.85) 40%, transparent);
         }
 
         .icon-circle {
-            width: 45px; height: 45px;
+            width: 40px; height: 40px;
             border-radius: 50%;
             background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             border: 1px solid rgba(255,255,255,0.2);
+            flex-shrink: 0;
         }
 
         .front .icon-circle { color: var(--danger); border-color: var(--danger); }
         .back .icon-circle { color: var(--safe); border-color: var(--safe); }
 
-        .details h3 { font-size: 0.85rem; font-family: 'Syncopate'; margin-bottom: 2px; }
-        .details p { font-size: 0.75rem; color: #ddd; font-weight: 300; }
+        .details h3 { font-size: 0.8rem; font-family: 'Syncopate'; margin-bottom: 2px; }
+        .details p { font-size: 0.75rem; color: #bbb; line-height: 1.2; }
 
         .footer-tag {
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             font-size: 0.6rem;
             text-transform: uppercase;
@@ -174,85 +169,71 @@
     <div class="status-bar">
         <div class="user-info">
             <h2>CARMINE PIO FIOLA</h2>
-            <p>Class 5°O | Digital Citizenship</p>
+            <p>Class 5°O | Civic Education</p>
         </div>
-        <i class="fa-solid fa-microchip" style="color: var(--accent); font-size: 1.5rem;"></i>
+        <i class="fa-solid fa-laptop-medical" style="color: var(--accent); font-size: 1.4rem;"></i>
     </div>
 
     <div class="scene">
         <div class="card" id="mainCard" onclick="this.classList.toggle('is-flipped')">
             
             <div class="card-face card-front">
-                <div class="banner" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80')">
+                <div class="banner" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500')">
                     <h1 style="color: var(--danger)">7 RISKS</h1>
                 </div>
 
                 <div class="items-container">
-                    <div class="visual-item">
-                        <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=300&q=60">
-                        <div class="item-overlay">
-                            <div class="icon-circle"><i class="fa-solid fa-fire"></i></div>
-                            <div class="details"><h3>Toasted Skin</h3><p>Heat damage from laptops on bare skin.</p></div>
-                        </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-fire"></i></div><div class="details"><h3>Toasted Skin</h3><p>Heat damage from laptops on bare skin.</p></div></div>
                     </div>
-                    <div class="visual-item">
-                        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=300&q=60">
-                        <div class="item-overlay">
-                            <div class="icon-circle"><i class="fa-solid fa-weight-scale"></i></div>
-                            <div class="details"><h3>Obesity</h3><p>Sedentary habits lead to weight gain.</p></div>
-                        </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-weight-scale"></i></div><div class="details"><h3>Obesity</h3><p>Sedentary lifestyle from screen time.</p></div></div>
                     </div>
-                    <div class="visual-item">
-                        <img src="https://images.unsplash.com/photo-1511295742364-917e704b624e?auto=format&fit=crop&w=300&q=60">
-                        <div class="item-overlay">
-                            <div class="icon-circle"><i class="fa-solid fa-moon"></i></div>
-                            <div class="details"><h3>Sleep Debt</h3><p>Blue light ruins melatonin & rest.</p></div>
-                        </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1511295742364-917e704b624e?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-moon"></i></div><div class="details"><h3>Sleep Debt</h3><p>Blue light ruins melatonin & sleep cycles.</p></div></div>
                     </div>
-                    <div class="visual-item">
-                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=300&q=60">
-                        <div class="item-overlay">
-                            <div class="icon-circle"><i class="fa-solid fa-ear-deaf"></i></div>
-                            <div class="details"><h3>Hearing Loss</h3><p>High volume damage (>85dB).</p></div>
-                        </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-ear-deaf"></i></div><div class="details"><h3>Hearing Loss</h3><p>High volume damage (>85dB).</p></div></div>
+                    </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-hand-pointer"></i></div><div class="details"><h3>Finger Stress</h3><p>Repetitive messaging joint pain.</p></div></div>
+                    </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1541170155377-5099046e3922?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-user-doctor"></i></div><div class="details"><h3>Tech-Neck</h3><p>Spine strain from slumped posture.</p></div></div>
+                    </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1513035909775-395849?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-bolt"></i></div><div class="details"><h3>RSI Injury</h3><p>Wrist damage from mouse usage.</p></div></div>
                     </div>
                 </div>
                 <div class="footer-tag">CLICK TO REVEAL SOLUTIONS ➔</div>
             </div>
 
             <div class="card-face card-back">
-                <div class="banner" style="background-image: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80')">
+                <div class="banner" style="background-image: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500')">
                     <h1 style="color: var(--safe)">7 HABITS</h1>
                 </div>
 
                 <div class="items-container">
-                    <div class="visual-item">
-                        <img src="https://images.unsplash.com/photo-1585241936939-be4099591252?auto=format&fit=crop&w=300&q=60">
-                        <div class="item-overlay">
-                            <div class="icon-circle"><i class="fa-solid fa-eye"></i></div>
-                            <div class="details"><h3>Night Mode</h3><p>Use blue light filters before bed.</p></div>
-                        </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1585241936939-be4099591252?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-eye"></i></div><div class="details"><h3>Night Filters</h3><p>Use blue light filters before bed.</p></div></div>
                     </div>
-                    <div class="visual-item">
-                        <img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=300&q=60">
-                        <div class="item-overlay">
-                            <div class="icon-circle"><i class="fa-solid fa-microphone"></i></div>
-                            <div class="details"><h3>Voice To Text</h3><p>Rest your joints using dictation.</p></div>
-                        </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-microphone"></i></div><div class="details"><h3>Voice To Text</h3><p>Use dictation to rest finger joints.</p></div></div>
                     </div>
-                    <div class="visual-item">
-                        <img src="https://images.unsplash.com/photo-1541170155377-5099046e3922?auto=format&fit=crop&w=300&q=60">
-                        <div class="item-overlay">
-                            <div class="icon-circle"><i class="fa-solid fa-chair"></i></div>
-                            <div class="details"><h3>Postural Care</h3><p>Monitor at eye level, back straight.</p></div>
-                        </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-chair"></i></div><div class="details"><h3>Ergonomics</h3><p>Monitor at eye level, back straight.</p></div></div>
                     </div>
-                    <div class="visual-item">
-                        <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=300&q=60">
-                        <div class="item-overlay">
-                            <div class="icon-circle"><i class="fa-solid fa-person-running"></i></div>
-                            <div class="details"><h3>Exercise</h3><p>Stay active to combat diseases.</p></div>
-                        </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-person-running"></i></div><div class="details"><h3>Exercise</h3><p>Stay active to combat inactivity.</p></div></div>
+                    </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1516339901600-2e1a62dc0c45?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-volume-low"></i></div><div class="details"><h3>Volume Cap</h3><p>Limit audio to protect inner ear cells.</p></div></div>
+                    </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1587614382346-4ec706388b28?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-laptop"></i></div><div class="details"><h3>Lap Desks</h3><p>Use protective tables for laptops.</p></div></div>
+                    </div>
+                    <div class="visual-item"><img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=200">
+                        <div class="item-overlay"><div class="icon-circle"><i class="fa-solid fa-clock"></i></div><div class="details"><h3>Breaks</h3><p>Stretch every 20 minutes of work.</p></div></div>
                     </div>
                 </div>
                 <div class="footer-tag">BACK TO RISKS ⬅</div>
