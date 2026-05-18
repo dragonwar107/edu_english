@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,7 +50,7 @@
             width: 100%;
             max-width: 450px;
             height: 85vh;
-            min-height: 750px;
+            min-height: 780px;
             perspective: 2000px;
             position: relative;
         }
@@ -63,7 +63,7 @@
             cursor: pointer;
         }
 
-        /* Effetto hover per PC */
+        /* Hover effect for PC */
         @media (hover: hover) {
             .card:hover { transform: translateY(-10px); }
             .card.flipped:hover { transform: rotateY(180deg) translateY(-10px); }
@@ -85,7 +85,7 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
-        /* Evita che il testo "trapeli" durante la rotazione */
+        /* Prevents text glitch during flip animation */
         .face * { backface-visibility: hidden; }
 
         .front { border-top: 6px solid var(--danger); }
@@ -93,34 +93,51 @@
 
         h1 { font-family: 'Syncopate'; font-size: 1.1rem; text-align: center; margin-bottom: 20px; }
 
-        /* LISTA CONTENUTI */
+        /* CONTENT LIST */
         .list-container { flex: 1; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; padding-right: 5px; }
 
         .item {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 12px;
             padding-bottom: 10px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        /* VISUAL BLOCK: Icon + Image wrapper */
+        .visual-block {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
         .icon-box {
-            width: 40px; height: 40px;
-            border-radius: 12px;
+            width: 36px; height: 36px;
+            border-radius: 10px;
             display: flex;
             align-items: center; justify-content: center;
-            font-size: 1.1rem;
+            font-size: 1rem;
             background: rgba(255, 255, 255, 0.03);
-            flex-shrink: 0;
         }
 
         .front .icon-box { color: var(--danger); border: 1px solid rgba(255, 71, 87, 0.3); }
         .back .icon-box { color: var(--safe); border: 1px solid rgba(46, 213, 115, 0.3); }
 
-        .text-box h3 { font-size: 0.75rem; font-family: 'Syncopate'; margin-bottom: 4px; color: #fff; }
-        .text-box p { font-size: 0.75rem; color: #b0b0b0; line-height: 1.4; font-weight: 300; }
+        /* New Image Style */
+        .thumb-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-        /* ANIMAZIONE CLICK HINT */
+        .text-box h3 { font-size: 0.75rem; font-family: 'Syncopate'; margin-bottom: 4px; color: #fff; }
+        .text-box p { font-size: 0.72rem; color: #b0b0b0; line-height: 1.4; font-weight: 300; }
+
+        /* PULSING CLICK HINT ANIMATION */
         @keyframes pulse {
             0% { opacity: 0.4; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.05); }
@@ -134,7 +151,7 @@
             animation: pulse 2s infinite ease-in-out;
         }
 
-        /* FOOTER EDUCAZIONE CIVICA */
+        /* CIVIC EDUCATION FOOTER NOTE */
         .civic-note {
             text-align: center; 
             font-size: 0.65rem; 
@@ -153,92 +170,151 @@
 
     <div class="top-nav">
         <h2>CARMINE PIO FIOLA</h2>
-        <p>Educazione Civica • Digital Wellbeing Project</p>
+        <p>Civic Education • Digital Wellbeing Project</p>
     </div>
 
     <div class="poster-scene">
         <div class="card" id="mainCard">
             
+            <!-- FRONT: 7 RISKS -->
             <div class="face front">
-                <h1 style="color: var(--danger)">7 RISCHI DIGITALI</h1>
+                <h1 style="color: var(--danger)">7 DIGITAL RISKS</h1>
                 <div class="list-container">
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-moon"></i></div>
-                        <div class="text-box"><h3>Debito di Sonno</h3><p>La luce blu inibisce la melatonina, distruggendo i ritmi circadiani e la qualità del riposo.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-moon"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1511295742364-92b9345f8e00?w=100&auto=format&fit=crop&q=60" alt="Insomnia">
+                        </div>
+                        <div class="text-box"><h3>Sleep Debt</h3><p>Blue light inhibits melatonin production, disrupting circadian rhythms and severely lowering sleep quality.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-hand-dots"></i></div>
-                        <div class="text-box"><h3>Sforzo Articolare</h3><p>L'uso ripetitivo di pollice e polso causa infiammazioni croniche ai tendini (Texting Thumb).</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-hand-dots"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1544725121-be3b5202d5cd?w=100&auto=format&fit=crop&q=60" alt="Phone in hand">
+                        </div>
+                        <div class="text-box"><h3>Joint Strain</h3><p>Repetitive texting and typing cause inflammation in thumb and wrist tendons, known as "texting thumb".</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-user-doctor"></i></div>
-                        <div class="text-box"><h3>Tech-Neck</h3><p>Inclinare la testa sui dispositivi esercita fino a 27kg di pressione sulla colonna vertebrale.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-user-doctor"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1591114067135-30a204d3066c?w=100&auto=format&fit=crop&q=60" alt="Bad Posture">
+                        </div>
+                        <div class="text-box"><h3>Tech-Neck</h3><p>Tilting your head forward for devices puts up to 60 lbs of pressure on the spine, causing chronic neck pain.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-weight-scale"></i></div>
-                        <div class="text-box"><h3>Sedentarismo</h3><p>L'eccessivo tempo davanti allo schermo rallenta il metabolismo e aumenta i rischi cardiovascolari.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-weight-scale"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&auto=format&fit=crop&q=60" alt="Sedentary">
+                        </div>
+                        <div class="text-box"><h3>Sedentary Lifestyle</h3><p>Excessive screen time replaces physical activity, slowing metabolism and increasing cardiovascular risks.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-ear-deaf"></i></div>
-                        <div class="text-box"><h3>Danni all'Udito</h3><p>L'uso prolungato di cuffie ad alto volume distrugge le cellule cigliate, causando acufeni e sordità.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-ear-deaf"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1618609378039-b572f64c5b42?w=100&auto=format&fit=crop&q=60" alt="Loud Headphones">
+                        </div>
+                        <div class="text-box"><h3>Hearing Damage</h3><p>High-volume headphone use for long periods destroys inner ear hair cells, causing premature hearing loss.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-fire"></i></div>
-                        <div class="text-box"><h3>Toasted Skin</h3><p>Il calore infrarosso dei laptop a contatto con la pelle può causare pigmentazione permanente e lesioni.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-fire"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1588508065123-287b28e013da?w=100&auto=format&fit=crop&q=60" alt="Laptop heat">
+                        </div>
+                        <div class="text-box"><h3>Toasted Skin</h3><p>Prolonged laptop use on bare skin causes infrared heat damage, leading to permanent pigmentation and lesions.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-eye-slash"></i></div>
-                        <div class="text-box"><h3>Affaticamento Visivo</h3><p>Fissare schermi vicini riduce la frequenza di ammiccamento, causando secchezza e stress oculare.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-eye-slash"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=100&auto=format&fit=crop&q=60" alt="Tired Eyes">
+                        </div>
+                        <div class="text-box"><h3>Digital Eye Strain</h3><p>Staring at close screens reduces blink rate, leading to severe dry eyes, fatigue, and blurred vision.</p></div>
                     </div>
+
                 </div>
-                <div class="click-hint">TOCCA PER LE SOLUZIONI ➔</div>
+                <div class="click-hint">TAP TO REVEAL SOLUTIONS ➔</div>
             </div>
 
+            <!-- BACK: 7 SMART HABITS -->
             <div class="face back">
-                <h1 style="color: var(--safe)">7 ABITUDINI SMART</h1>
+                <h1 style="color: var(--safe)">7 SMART HABITS</h1>
                 <div class="list-container">
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-circle-half-stroke"></i></div>
-                        <div class="text-box"><h3>Filtri Luce Blu</h3><p>Usa Night Shift o occhiali protettivi 2 ore prima di dormire per preservare il ciclo del sonno.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-circle-half-stroke"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=100&auto=format&fit=crop&q=60" alt="Screen Filter">
+                        </div>
+                        <div class="text-box"><h3>Blue Light Filters</h3><p>Enable Night Shift or wear blue light glasses at least 2 hours before bed to protect natural sleep cycles.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-microphone-lines"></i></div>
-                        <div class="text-box"><h3>Dettatura Vocale</h3><p>Alterna la digitazione con i comandi vocali per far riposare i tendini delle mani.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-microphone-lines"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=100&auto=format&fit=crop&q=60" alt="Voice Mic">
+                        </div>
+                        <div class="text-box"><h3>Voice Dictation</h3><p>Alternate typing with voice commands and dictation to rest your hand tendons and prevent joint wear.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-chair"></i></div>
-                        <div class="text-box"><h3>Setup Ergonomico</h3><p>Monitor all'altezza degli occhi e sedia con supporto lombare. Piedi sempre ben appoggiati.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-chair"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1505797149-43b0069ec26b?w=100&auto=format&fit=crop&q=60" alt="Ergonomic Desk">
+                        </div>
+                        <div class="text-box"><h3>Ergonomic Setup</h3><p>Keep the monitor at eye level and use a chair with lumbar support. Keep your feet flat on the floor.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-person-running"></i></div>
-                        <div class="text-box"><h3>Esercizio Regolare</h3><p>Compensa le ore digitali con 30 min di movimento. Lo sport riduce lo stress digitale.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-person-running"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=100&auto=format&fit=crop&q=60" alt="Running">
+                        </div>
+                        <div class="text-box"><h3>Regular Exercise</h3><p>Offset digital hours with 30 minutes of daily movement. Sports help reduce overall digital stress.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-volume-low"></i></div>
-                        <div class="text-box"><h3>Regola 60/60</h3><p>Volume sotto il 60% e massimo 60 minuti di ascolto continuo per proteggere i timpani.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-volume-low"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1484755560693-a4074577af3a?w=100&auto=format&fit=crop&q=60" alt="Safe Audio">
+                        </div>
+                        <div class="text-box"><h3>60/60 Rule</h3><p>Keep the volume below 60% of the maximum and limit headphone use to 60 minutes per session.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-laptop"></i></div>
-                        <div class="text-box"><h3>Protezione Gambe</h3><p>Usa sempre una scrivania o una base di raffreddamento. Evita il contatto diretto con la pelle.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-laptop"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=100&auto=format&fit=crop&q=60" alt="Laptop on Desk">
+                        </div>
+                        <div class="text-box"><h3>Lap Protection</h3><p>Always use a desk or a cooling pad for laptops. Avoid direct skin contact to prevent heat damage.</p></div>
                     </div>
+                    
                     <div class="item">
-                        <div class="icon-box"><i class="fa-solid fa-clock"></i></div>
-                        <div class="text-box"><h3>Regola 20-20-20</h3><p>Ogni 20 minuti, guarda un oggetto a 20 piedi (6m) per 20 secondi per rilassare gli occhi.</p></div>
+                        <div class="visual-block">
+                            <div class="icon-box"><i class="fa-solid fa-clock"></i></div>
+                            <img class="thumb-img" src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=100&auto=format&fit=crop&q=60" alt="Nature view">
+                        </div>
+                        <div class="text-box"><h3>20-20-20 Rule</h3><p>Every 20 minutes, look at an object 20 feet away for 20 seconds. This drastically relaxes eye muscles.</p></div>
                     </div>
+
                 </div>
-                <div class="click-hint">TORNA AI RISCHI ⬅</div>
+                <div class="click-hint">BACK TO RISKS ⬅</div>
             </div>
 
         </div>
     </div>
 
     <p class="civic-note">
-        La salute digitale è un pilastro della cittadinanza consapevole. <br>
-        Proteggere il proprio corpo permette di vivere la tecnologia come un'opportunità, non come un limite.
+        Digital health is a core pillar of responsible digital citizenship. <br>
+        Protecting our bodies allows us to embrace technology as an opportunity, not a limitation.
     </p>
 
     <script>
-        // Gestione interazione click/touch corretta
         const card = document.getElementById('mainCard');
         card.addEventListener('click', function() {
             this.classList.toggle('flipped');
