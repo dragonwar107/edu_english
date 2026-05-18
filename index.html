@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Wellbeing Interactive flyer | Carmine Pio Fiola | Civic Education</title>
+    <title>Digital Wellbeing Interactive Flyer | Carmine Pio Fiola</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght=700&family=Outfit:wght=300;400;600;900&display=swap" rel="stylesheet">
@@ -55,7 +55,7 @@
         .top-nav h2 { font-family: 'Syncopate'; font-size: 0.8rem; color: var(--accent); letter-spacing: 1.5px; }
         .top-nav p { font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; margin-top: 4px; }
 
-        /* CONTROLLO TAB (Sostituisce il flip 3D problematico) */
+        /* CONTROLLO TAB */
         .tab-controller {
             display: flex;
             width: 100%; max-width: 450px;
@@ -119,7 +119,7 @@
 
         h1 { font-family: 'Syncopate'; font-size: 1.1rem; text-align: center; margin-bottom: 15px; }
 
-        /* SCORRIMENTO PERFETTO E FLUIDO SU ENTRAMBI I LATI */
+        /* SCORRIMENTO LIQUIDO */
         .list-container { 
             flex: 1; 
             display: flex; 
@@ -128,7 +128,7 @@
             overflow-y: auto; 
             overflow-x: hidden;
             padding-right: 4px;
-            -webkit-overflow-scrolling: touch; /* Abilita lo slancio fluido su iOS/Android */
+            -webkit-overflow-scrolling: touch;
             touch-action: pan-y;
         }
         .list-container::-webkit-scrollbar { width: 3px; }
@@ -142,7 +142,7 @@
             display: flex; flex-direction: column; gap: 6px;
             cursor: pointer; transition: all 0.2s ease;
             position: relative;
-            touch-action: pan-y; /* Forza il browser a lasciare libero lo scorrimento verticale */
+            touch-action: pan-y;
         }
         
         .node-header { display: flex; align-items: center; gap: 10px; padding-right: 60px; }
@@ -215,10 +215,10 @@
 
     <div class="top-nav">
         <h2>CARMINE PIO FIOLA</h2>
-        <p>Civic Education • Mobile Fluid Interactive Poster</p>
+        <p>Civic Education • Digital Wellbeing Interactive flyer</p>
     </div>
 
-    <!-- SELETTORE COMODO PER SMARTPHONE -->
+    <!-- SELETTORE TAB -->
     <div class="tab-controller">
         <button class="tab-btn active-danger" id="btnRisks" onclick="switchTab('risks')">
             <i class="fa-solid fa-triangle-exclamation"></i> Risks
@@ -408,7 +408,6 @@
     </p>
 
     <script>
-        // LOGICA DI CAMBIO SCHERMATA SENZA BUG 3D
         function switchTab(tabName) {
             const panelRisks = document.getElementById('panelRisks');
             const panelHabits = document.getElementById('panelHabits');
@@ -428,7 +427,6 @@
             }
         }
 
-        // INTERAZIONE CLICK NATIVA SUI RISCHI
         document.querySelectorAll('.risk-node').forEach(node => {
             node.addEventListener('click', function() {
                 const bar = this.querySelector('.danger-fill');
@@ -444,7 +442,6 @@
             });
         });
 
-        // INTERAZIONE CLICK NATIVA SULLE SOLUZIONI
         document.querySelectorAll('.habit-node').forEach(node => {
             node.addEventListener('click', function() {
                 const fill = this.querySelector('.protection-fill');
