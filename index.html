@@ -31,7 +31,7 @@
             position: relative;
         }
 
-        /* SFONDO */
+        /* SFONDO TRIDIMENSIONALE */
         body::before {
             content: '';
             position: absolute;
@@ -56,10 +56,10 @@
         .top-nav h2 { font-family: 'Syncopate'; font-size: 0.8rem; color: var(--accent); letter-spacing: 1.5px; }
         .top-nav p { font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; margin-top: 4px; }
 
-        /* POSTER CONTAINER FIXED WIDTH & HEIGHT FOR VISIBILITY */
+        /* POSTER CONTAINER */
         .poster-scene {
             width: 100%; max-width: 450px;
-            height: 720px; /* Altezza fissa nativa garantisce visibilità ovunque */
+            height: 720px; 
             perspective: 2000px; 
             position: relative;
             margin-bottom: 20px;
@@ -86,7 +86,7 @@
 
         h1 { font-family: 'Syncopate'; font-size: 1.1rem; text-align: center; margin-bottom: 15px; }
 
-        /* SCROLL CONTAINER */
+        /* SCROLL CONTAINER SBLOCCATO E FLUIDO */
         .list-container { 
             flex: 1; 
             display: flex; 
@@ -94,11 +94,12 @@
             gap: 10px; 
             overflow-y: auto; 
             padding-right: 4px;
+            -webkit-overflow-scrolling: touch; /* Forza lo scorrimento inerziale nativo su iOS */
         }
         .list-container::-webkit-scrollbar { width: 3px; }
         .list-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
 
-        /* INTERACTIVE ITEMS */
+        /* INTERACTIVE ITEMS (OTTIMIZZATI PER LO SCORRIMENTO TOUCH) */
         .interactive-node {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.04);
@@ -106,6 +107,8 @@
             display: flex; flex-direction: column; gap: 6px;
             cursor: pointer; transition: all 0.2s ease;
             position: relative;
+            /* FIX CRUCIALE: Impedisce al click di bloccare lo scroll verticale del dito */
+            touch-action: pan-y; 
         }
         
         .node-header { display: flex; align-items: center; gap: 10px; padding-right: 60px; }
