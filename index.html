@@ -36,8 +36,8 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background: 
-                linear-gradient(rgba(0, 242, 255, 0.01) 1px, transparent 1px) 0 0 / 25px 25px,
-                linear-gradient(90deg, rgba(0, 242, 255, 0.01) 1px, transparent 1px) 0 0 / 25px 25px;
+                linear-gradient(rgba(0, 242, 255, 0.015) 1px, transparent 1px) 0 0 / 25px 25px,
+                linear-gradient(90deg, rgba(0, 242, 255, 0.015) 1px, transparent 1px) 0 0 / 25px 25px;
             z-index: -2;
             pointer-events: none;
         }
@@ -50,10 +50,28 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             text-align: center;
             backdrop-filter: blur(12px);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
-        .top-nav h2 { font-family: 'Syncopate'; font-size: 0.8rem; color: var(--accent); letter-spacing: 1.5px; }
-        .top-nav p { font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; margin-top: 4px; }
+        .top-nav h2 { font-family: 'Syncopate'; font-size: 0.85rem; color: var(--accent); letter-spacing: 1.5px; }
+        .top-nav p { font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; margin-top: 4px; letter-spacing: 1px; }
+
+        /* NUOVA STATISTICA DINAMICA (DASHBOARD SCORE) */
+        .live-status-bar {
+            width: 100%; max-width: 450px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            font-family: 'Syncopate';
+        }
+        .stat-box { display: flex; align-items: center; gap: 6px; }
+        #riskCount { color: var(--danger); transition: all 0.3s; }
+        #safetyScore { color: var(--safe); transition: all 0.3s; }
 
         /* CONTROLLO TAB */
         .tab-controller {
@@ -76,19 +94,19 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .tab-btn.active-danger {
-            background: rgba(255, 71, 87, 0.1);
+            background: rgba(255, 71, 87, 0.15);
             border-color: var(--danger);
             color: var(--danger);
-            box-shadow: 0 0 15px rgba(255, 71, 87, 0.15);
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.2);
         }
         .tab-btn.active-safe {
-            background: rgba(46, 213, 115, 0.1);
+            background: rgba(46, 213, 115, 0.15);
             border-color: var(--safe);
             color: var(--safe);
-            box-shadow: 0 0 15px rgba(46, 213, 115, 0.15);
+            box-shadow: 0 0 15px rgba(46, 213, 115, 0.2);
         }
 
         /* CONTAINER CONTENUTI */
@@ -102,112 +120,122 @@
         .panel {
             position: absolute; width: 100%; height: 100%;
             border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 20px 16px; display: flex; flex-direction: column;
+            padding: 22px 16px; display: flex; flex-direction: column;
             background: var(--panel-bg); box-shadow: 0 20px 50px rgba(0,0,0,0.7);
             opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            transform: translateY(10px);
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.95) translateY(10px);
         }
         .panel.active {
             opacity: 1;
             pointer-events: auto;
-            transform: translateY(0);
+            transform: scale(1) translateY(0);
         }
 
         .panel-risks { border-top: 6px solid var(--danger); }
         .panel-habits { border-top: 6px solid var(--safe); }
 
-        h1 { font-family: 'Syncopate'; font-size: 1.1rem; text-align: center; margin-bottom: 15px; }
+        h1 { font-family: 'Syncopate'; font-size: 1.1rem; text-align: center; margin-bottom: 18px; letter-spacing: 0.5px; }
 
         /* SCORRIMENTO LIQUIDO */
         .list-container { 
             flex: 1; 
             display: flex; 
             flex-direction: column; 
-            gap: 10px; 
+            gap: 12px; 
             overflow-y: auto; 
             overflow-x: hidden;
             padding-right: 4px;
             -webkit-overflow-scrolling: touch;
             touch-action: pan-y;
         }
-        .list-container::-webkit-scrollbar { width: 3px; }
+        .list-container::-webkit-scrollbar { width: 4px; }
         .list-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
 
         /* MODULI DELLA LISTA */
         .interactive-node {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 14px; padding: 12px;
-            display: flex; flex-direction: column; gap: 6px;
-            cursor: pointer; transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px; padding: 14px;
+            display: flex; flex-direction: column; gap: 8px;
+            cursor: pointer; transition: all 0.25s ease;
             position: relative;
             touch-action: pan-y;
         }
+        .interactive-node:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateX(2px);
+        }
         
-        .node-header { display: flex; align-items: center; gap: 10px; padding-right: 60px; }
+        .node-header { display: flex; align-items: center; gap: 12px; padding-right: 65px; }
 
         .icon-wrapper {
-            width: 32px; height: 32px; border-radius: 8px;
+            width: 34px; height: 34px; border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem; background: rgba(255, 255, 255, 0.02);
+            font-size: 0.95rem; background: rgba(255, 255, 255, 0.02);
             flex-shrink: 0;
+            transition: all 0.25s ease;
         }
         .panel-risks .icon-wrapper { color: var(--danger); border: 1px solid rgba(255, 71, 87, 0.2); }
         .panel-habits .icon-wrapper { color: var(--safe); border: 1px solid rgba(46, 213, 115, 0.2); }
 
-        .node-title h3 { font-size: 0.75rem; font-family: 'Syncopate'; color: #fff; }
-        .node-body p { font-size: 0.7rem; color: #a0a0a5; line-height: 1.4; font-weight: 300; }
+        .node-title h3 { font-size: 0.75rem; font-family: 'Syncopate'; color: #fff; letter-spacing: 0.5px; }
+        .node-body p { font-size: 0.72rem; color: #a0a0a5; line-height: 1.45; font-weight: 300; }
 
         /* INTERAZIONE RISCHI */
         .danger-gauge-bar {
-            width: 100%; height: 5px; background: rgba(255, 255, 255, 0.05);
-            border-radius: 2px; overflow: hidden; margin-top: 2px;
+            width: 100%; height: 6px; background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px; overflow: hidden; margin-top: 4px;
         }
-        .danger-fill { height: 100%; width: 0%; background: var(--danger); transition: width 0.4s ease; }
+        .danger-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--danger), #ff6b81); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         
         .risk-status {
-            position: absolute; right: 12px; top: 12px;
+            position: absolute; right: 14px; top: 14px;
             font-family: 'Syncopate'; font-size: 0.5rem;
-            padding: 2px 5px; border-radius: 4px;
+            padding: 3px 6px; border-radius: 5px;
             background: rgba(255, 71, 87, 0.1); color: var(--danger);
-            opacity: 0.5; transition: all 0.2s;
+            opacity: 0.5; transition: all 0.25s;
         }
 
         .interactive-node.activated-risk {
             border-color: rgba(255, 71, 87, 0.4);
-            background: rgba(255, 71, 87, 0.04);
+            background: rgba(255, 71, 87, 0.05);
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.05);
         }
         .interactive-node.activated-risk .risk-status { opacity: 1; background: var(--danger); color: #000; font-weight: 900; }
-        .interactive-node.activated-risk .icon-wrapper { background: var(--danger); color: #000; }
+        .interactive-node.activated-risk .icon-wrapper { background: var(--danger); color: #000; border-color: transparent; }
 
         /* INTERAZIONE SOLUTIONS */
         .switch-container {
-            position: absolute; right: 12px; top: 14px;
-            width: 32px; height: 16px; background: rgba(255,255,255,0.1);
+            position: absolute; right: 14px; top: 16px;
+            width: 34px; height: 18px; background: rgba(255,255,255,0.1);
             border-radius: 10px; padding: 2px;
+            transition: background 0.25s;
         }
-        .switch-pointer { width: 12px; height: 12px; background: #fff; border-radius: 50%; transition: transform 0.2s ease; }
+        .switch-pointer { width: 14px; height: 14px; background: #fff; border-radius: 50%; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
         
         .protection-bar {
-            width: 100%; height: 5px; background: rgba(255, 255, 255, 0.05);
-            border-radius: 2px; overflow: hidden; opacity: 0.2; margin-top: 2px; transition: opacity 0.2s;
+            width: 100%; height: 6px; background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px; overflow: hidden; opacity: 0.2; margin-top: 4px; transition: opacity 0.25s;
         }
-        .protection-fill { height: 100%; width: 0%; background: var(--safe); transition: width 0.4s ease; }
+        .protection-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--safe), #26af5a); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
         .interactive-node.habit-on {
             border-color: rgba(46, 213, 115, 0.4);
-            background: rgba(46, 213, 115, 0.04);
+            background: rgba(46, 213, 115, 0.05);
+            box-shadow: 0 4px 15px rgba(46, 213, 115, 0.05);
         }
         .interactive-node.habit-on .switch-container { background: var(--safe); }
         .interactive-node.habit-on .switch-pointer { transform: translateX(16px); }
         .interactive-node.habit-on .protection-bar { opacity: 1; }
         .interactive-node.habit-on .protection-fill { width: 100%; }
         .interactive-node.habit-on h3 { color: var(--safe); }
+        .interactive-node.habit-on .icon-wrapper { background: rgba(46, 213, 115, 0.2); border-color: var(--safe); }
 
         .civic-note {
             text-align: center; font-size: 0.65rem; opacity: 0.5;
-            max-width: 360px; line-height: 1.5; margin-top: 10px;
+            max-width: 380px; line-height: 1.5; margin-top: 10px;
+            letter-spacing: 0.3px;
         }
     </style>
 </head>
@@ -216,6 +244,16 @@
     <div class="top-nav">
         <h2>CARMINE PIO FIOLA</h2>
         <p>Civic Education • Digital Wellbeing Interactive flyer</p>
+    </div>
+
+    <!-- PANNELLO STATISTICHE LIVE (Aggiunto per stupire la prof!) -->
+    <div class="live-status-bar">
+        <div class="stat-box">
+            <i class="fa-solid fa-radiation"></i> Risks Analyzed: <span id="riskCount">0/7</span>
+        </div>
+        <div class="stat-box">
+            <i class="fa-solid fa-heart-pulse"></i> Shield Level: <span id="safetyScore">0%</span>
+        </div>
     </div>
 
     <!-- SELETTORE TAB -->
@@ -427,6 +465,29 @@
             }
         }
 
+        // AGGIORNAMENTO LIVE DEI CONTATORI
+        function updateDashboardStats() {
+            const activatedRisks = document.querySelectorAll('.activated-risk').length;
+            document.getElementById('riskCount').innerText = `${activatedRisks}/7`;
+            
+            // Effetto pulsazione se ci sono rischi attivi
+            if(activatedRisks > 0) {
+                document.getElementById('riskCount').style.textShadow = '0 0 8px var(--danger)';
+            } else {
+                document.getElementById('riskCount').style.textShadow = 'none';
+            }
+
+            const activeHabits = document.querySelectorAll('.habit-on').length;
+            const safetyPercentage = Math.round((activeHabits / 7) * 100);
+            document.getElementById('safetyScore').innerText = `${safetyPercentage}%`;
+            
+            if(safetyPercentage > 0) {
+                document.getElementById('safetyScore').style.textShadow = '0 0 8px var(--safe)';
+            } else {
+                document.getElementById('safetyScore').style.textShadow = 'none';
+            }
+        }
+
         document.querySelectorAll('.risk-node').forEach(node => {
             node.addEventListener('click', function() {
                 const bar = this.querySelector('.danger-fill');
@@ -439,6 +500,7 @@
                     this.classList.add('activated-risk');
                     bar.style.width = intensity + '%';
                 }
+                updateDashboardStats();
             });
         });
 
@@ -451,6 +513,7 @@
                 } else {
                     fill.style.width = '0%';
                 }
+                updateDashboardStats();
             });
         });
     </script>
