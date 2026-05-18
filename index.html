@@ -31,7 +31,6 @@
             position: relative;
         }
 
-        /* SFONDO TRIDIMENSIONALE */
         body::before {
             content: '';
             position: absolute;
@@ -43,7 +42,6 @@
             pointer-events: none;
         }
 
-        /* HEADER */
         .top-nav {
             width: 100%; max-width: 450px;
             background: rgba(255, 255, 255, 0.02);
@@ -60,7 +58,7 @@
         .poster-scene {
             width: 100%; max-width: 450px;
             height: 720px; 
-            perspective: 2000px; 
+            perspective: 1500px; 
             position: relative;
             margin-bottom: 20px;
         }
@@ -69,7 +67,7 @@
             width: 100%; height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .card.flipped { transform: rotateY(180deg); }
 
@@ -81,29 +79,31 @@
             background: var(--panel-bg); box-shadow: 0 20px 50px rgba(0,0,0,0.7);
         }
 
-        .front { border-top: 6px solid var(--danger); }
+        .front { border-top: 6px solid var(--danger); z-index: 2; transform: rotateY(0deg); }
         .back { border-top: 6px solid var(--safe); transform: rotateY(180deg); }
 
         h1 { font-family: 'Syncopate'; font-size: 1.1rem; text-align: center; margin-bottom: 15px; }
 
-        /* CONTENITORE DI SCORRIMENTO OTTIMIZZATO PER IL 3D MOBILE */
+        /* CONTENITORI DI SCORRIMENTO FLUIDI E SBLOCCATI */
         .list-container { 
             flex: 1; 
             display: flex; 
             flex-direction: column; 
             gap: 10px; 
             overflow-y: auto; 
+            overflow-x: hidden;
             padding-right: 4px;
-            /* Forza l'isolamento del piano di scorrimento staccandolo dai bug del 3D */
+            /* Soluzione hardware definitiva per evitare blocchi su asse Y */
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-y;
+            will-change: transform;
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-y !important;
         }
         .list-container::-webkit-scrollbar { width: 3px; }
         .list-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
 
-        /* ELEMENTI INTERATTIVI ORIGINALI */
+        /* ELEMENTI DELLA LISTA */
         .interactive-node {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.04);
@@ -111,8 +111,9 @@
             display: flex; flex-direction: column; gap: 6px;
             cursor: pointer; transition: all 0.2s ease;
             position: relative;
-            /* Permette lo scroll nativo verticale senza interferenze */
-            touch-action: pan-y !important; 
+            /* Impedisce l'intercettazione dei gesti di scorrimento globali */
+            touch-action: pan-y;
+            transform: translateZ(0);
         }
         
         .node-header { display: flex; align-items: center; gap: 10px; padding-right: 60px; }
@@ -126,18 +127,16 @@
         .front .icon-wrapper { color: var(--danger); border: 1px solid rgba(255, 71, 87, 0.2); }
         .back .icon-wrapper { color: var(--safe); border: 1px solid rgba(46, 213, 115, 0.2); }
 
-        .node-title h3 { font-size: 0.75rem; font-family: 'Syncopate'; color: #fff; }
+        .node-title h3 { font-size: 0.75rem; font-family: 'Syncopate'; color: #fff; transition: color 0.2s; }
         .node-body p { font-size: 0.7rem; color: #a0a0a5; line-height: 1.4; font-weight: 300; }
 
-        /* RISKS INTERACTION */
+        /* INTERAZIONE RISCHI (FRONT) */
         .danger-gauge-bar {
             width: 100%; height: 5px; background: rgba(255, 255, 255, 0.05);
             border-radius: 2px; overflow: hidden; margin-top: 2px;
         }
-        .danger-fill {
-            height: 100%; width: 0%; background: var(--danger);
-            transition: width 0.5s ease;
-        }
+        .danger-fill { height: 100%; width: 0%; background: var(--danger); transition: width 0.4s ease; }
+        
         .risk-status {
             position: absolute; right: 12px; top: 12px;
             font-family: 'Syncopate'; font-size: 0.5rem;
@@ -153,19 +152,17 @@
         .interactive-node.activated-risk .risk-status { opacity: 1; background: var(--danger); color: #000; font-weight: 900; }
         .interactive-node.activated-risk .icon-wrapper { background: var(--danger); color: #000; }
 
-        /* HABITS INTERACTION */
+        /* INTERAZIONE ABITUDINI (BACK) */
         .switch-container {
             position: absolute; right: 12px; top: 14px;
             width: 32px; height: 16px; background: rgba(255,255,255,0.1);
             border-radius: 10px; padding: 2px;
         }
-        .switch-pointer {
-            width: 12px; height: 12px; background: #fff;
-            border-radius: 50%; transition: transform 0.2s ease;
-        }
+        .switch-pointer { width: 12px; height: 12px; background: #fff; border-radius: 50%; transition: transform 0.2s ease; }
+        
         .protection-bar {
             width: 100%; height: 5px; background: rgba(255, 255, 255, 0.05);
-            border-radius: 2px; overflow: hidden; opacity: 0.2; margin-top: 2px;
+            border-radius: 2px; overflow: hidden; opacity: 0.2; margin-top: 2px; transition: opacity 0.2s;
         }
         .protection-fill { height: 100%; width: 0%; background: var(--safe); transition: width 0.4s ease; }
 
@@ -179,13 +176,14 @@
         .interactive-node.habit-on .protection-fill { width: 100%; }
         .interactive-node.habit-on h3 { color: var(--safe); }
 
-        /* BUTTONS */
+        /* BOTTONI ROTAZIONE */
         .flip-trigger-btn {
             background: transparent; border: 1px dashed var(--accent);
             color: var(--accent); padding: 12px; border-radius: 12px;
             font-family: 'Syncopate'; font-size: 0.7rem; letter-spacing: 1px;
             cursor: pointer; margin-top: 15px; width: 100%;
             display: flex; align-items: center; justify-content: center; gap: 8px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .civic-note {
@@ -204,78 +202,85 @@
     <div class="poster-scene">
         <div class="card" id="posterCard">
             
-            <!-- FRONT: RISKS -->
+            <!-- FRONT: 7 RISKS (ORDINATI) -->
             <div class="face front">
                 <h1 style="color: var(--danger)"><i class="fa-solid fa-triangle-exclamation"></i> 7 DIGITAL RISKS</h1>
                 <div class="list-container">
                     
-                    <div class="interactive-node" onclick="triggerRisk(this, 95)">
+                    <!-- 1. Sonno -->
+                    <div class="interactive-node risk-node" data-intensity="95">
                         <span class="risk-status">CRITICAL</span>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-moon"></i></div>
-                            <div class="node-title"><h3>Sleep Debt</h3></div>
+                            <div class="node-title"><h3>1. Sleep Debt</h3></div>
                         </div>
                         <div class="node-body"><p>Blue light blocks melatonin synthesis, altering biological sleep cycles.</p></div>
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 75)">
+                    <!-- 2. Vista -->
+                    <div class="interactive-node risk-node" data-intensity="85">
                         <span class="risk-status">HIGH RISK</span>
                         <div class="node-header">
-                            <div class="icon-wrapper"><i class="fa-solid fa-hand-dots"></i></div>
-                            <div class="node-title"><h3>Joint Strain</h3></div>
+                            <div class="icon-wrapper"><i class="fa-solid fa-eye-slash"></i></div>
+                            <div class="node-title"><h3>2. Ocular Fatigue</h3></div>
                         </div>
-                        <div class="node-body"><p>Continuous text input induces chronic tendon friction in wrists.</p></div>
+                        <div class="node-body"><p>Static display focusing drops blinking, creating severe dry eyes.</p></div>
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 90)">
+                    <!-- 3. Collo/Cervicale -->
+                    <div class="interactive-node risk-node" data-intensity="90">
                         <span class="risk-status">CRITICAL</span>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-user-doctor"></i></div>
-                            <div class="node-title"><h3>Tech-Neck</h3></div>
+                            <div class="node-title"><h3>3. Tech-Neck</h3></div>
                         </div>
                         <div class="node-body"><p>Forward head tilt forces advanced load strain onto the cervical spine.</p></div>
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 80)">
+                    <!-- 4. Articolazioni/Mani -->
+                    <div class="interactive-node risk-node" data-intensity="75">
+                        <span class="risk-status">HIGH RISK</span>
+                        <div class="node-header">
+                            <div class="icon-wrapper"><i class="fa-solid fa-hand-dots"></i></div>
+                            <div class="node-title"><h3>4. Joint Strain</h3></div>
+                        </div>
+                        <div class="node-body"><p>Continuous text input induces chronic tendon friction in wrists.</p></div>
+                        <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
+                    </div>
+
+                    <!-- 5. Sedentarietà -->
+                    <div class="interactive-node risk-node" data-intensity="80">
                         <span class="risk-status">HIGH RISK</span>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-weight-scale"></i></div>
-                            <div class="node-title"><h3>Sedentary State</h3></div>
+                            <div class="node-title"><h3>5. Sedentary State</h3></div>
                         </div>
                         <div class="node-body"><p>Prolonged uninterrupted device usage slows body metabolism.</p></div>
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 60)">
+                    <!-- 6. Udito -->
+                    <div class="interactive-node risk-node" data-intensity="60">
                         <span class="risk-status">WARNING</span>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-ear-deaf"></i></div>
-                            <div class="node-title"><h3>Hearing Atrophy</h3></div>
+                            <div class="node-title"><h3>6. Hearing Atrophy</h3></div>
                         </div>
                         <div class="node-body"><p>Unregulated sound pressures via earphones damage cochlear stability.</p></div>
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 55)">
+                    <!-- 7. Calore/Pelle -->
+                    <div class="interactive-node risk-node" data-intensity="55">
                         <span class="risk-status">WARNING</span>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-fire"></i></div>
-                            <div class="node-title"><h3>Thermal Lesions</h3></div>
+                            <div class="node-title"><h3>7. Thermal Lesions</h3></div>
                         </div>
                         <div class="node-body"><p>Direct lap placement of hot hardware produces localized skin lesions.</p></div>
-                        <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
-                    </div>
-
-                    <div class="interactive-node" onclick="triggerRisk(this, 85)">
-                        <span class="risk-status">HIGH RISK</span>
-                        <div class="node-header">
-                            <div class="icon-wrapper"><i class="fa-solid fa-eye-slash"></i></div>
-                            <div class="node-title"><h3>Ocular Fatigue</h3></div>
-                        </div>
-                        <div class="node-body"><p>Static display focusing drops blinking, creating severe dry eyes.</p></div>
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
@@ -283,78 +288,85 @@
                 <button class="flip-trigger-btn" onclick="toggleFlip()">SWITCH TO SOLUTIONS <i class="fa-solid fa-rotate"></i></button>
             </div>
 
-            <!-- BACK: SOLUTIONS -->
+            <!-- BACK: 7 SMART HABITS (CORRISPONDENTI AI RISCHI) -->
             <div class="face back">
                 <h1 style="color: var(--safe)"><i class="fa-solid fa-shield-halved"></i> 7 SMART HABITS</h1>
                 <div class="list-container">
                     
-                    <div class="interactive-node" onclick="toggleHabit(this)">
+                    <!-- 1. Rimedio Sonno -->
+                    <div class="interactive-node habit-node">
                         <div class="switch-container"><div class="switch-pointer"></div></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-circle-half-stroke"></i></div>
-                            <div class="node-title"><h3>Spectral Filters</h3></div>
+                            <div class="node-title"><h3>1. Spectral Filters</h3></div>
                         </div>
                         <div class="node-body"><p>Engage system warm shifts at sundown to safeguard baseline hormones.</p></div>
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
+                    <!-- 2. Rimedio Vista -->
+                    <div class="interactive-node habit-node">
                         <div class="switch-container"><div class="switch-pointer"></div></div>
                         <div class="node-header">
-                            <div class="icon-wrapper"><i class="fa-solid fa-microphone-lines"></i></div>
-                            <div class="node-title"><h3>Voice Transcription</h3></div>
+                            <div class="icon-wrapper"><i class="fa-solid fa-clock"></i></div>
+                            <div class="node-title"><h3>2. The 20-20-20 Shift</h3></div>
                         </div>
-                        <div class="node-body"><p>Substitute complex typing intervals with software voice dictation.</p></div>
+                        <div class="node-body"><p>Every 20 minutes, observe an object at 20 feet distance for 20 seconds.</p></div>
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
+                    <!-- 3. Rimedio Collo/Cervicale -->
+                    <div class="interactive-node habit-node">
                         <div class="switch-container"><div class="switch-pointer"></div></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-chair"></i></div>
-                            <div class="node-title"><h3>Ergonomic Angles</h3></div>
+                            <div class="node-title"><h3>3. Ergonomic Angles</h3></div>
                         </div>
                         <div class="node-body"><p>Calibrate screen boundaries at eye level and use lumbar support.</p></div>
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
+                    <!-- 4. Rimedio Articolazioni/Mani -->
+                    <div class="interactive-node habit-node">
+                        <div class="switch-container"><div class="switch-pointer"></div></div>
+                        <div class="node-header">
+                            <div class="icon-wrapper"><i class="fa-solid fa-microphone-lines"></i></div>
+                            <div class="node-title"><h3>4. Voice Transcription</h3></div>
+                        </div>
+                        <div class="node-body"><p>Substitute complex typing intervals with software voice dictation.</p></div>
+                        <div class="protection-bar"><div class="protection-fill"></div></div>
+                    </div>
+
+                    <!-- 5. Rimedio Sedentarietà -->
+                    <div class="interactive-node habit-node">
                         <div class="switch-container"><div class="switch-pointer"></div></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-person-running"></i></div>
-                            <div class="node-title"><h3>Kinetic Counters</h3></div>
+                            <div class="node-title"><h3>5. Kinetic Counters</h3></div>
                         </div>
                         <div class="node-body"><p>Break structural sedentary durations using active daily movement.</p></div>
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
+                    <!-- 6. Rimedio Udito -->
+                    <div class="interactive-node habit-node">
                         <div class="switch-container"><div class="switch-pointer"></div></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-volume-low"></i></div>
-                            <div class="node-title"><h3>The 60/60 Rule</h3></div>
+                            <div class="node-title"><h3>6. The 60/60 Rule</h3></div>
                         </div>
                         <div class="node-body"><p>Cap headphone volumes under 60% for a maximum of 60 minutes.</p></div>
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
+                    <!-- 7. Rimedio Calore/Pelle -->
+                    <div class="interactive-node habit-node">
                         <div class="switch-container"><div class="switch-pointer"></div></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-laptop"></i></div>
-                            <div class="node-title"><h3>Isolation Barriers</h3></div>
+                            <div class="node-title"><h3>7. Isolation Barriers</h3></div>
                         </div>
                         <div class="node-body"><p>Utilize desks or active thermal cooling pads under laptop shells.</p></div>
-                        <div class="protection-bar"><div class="protection-fill"></div></div>
-                    </div>
-
-                    <div class="interactive-node" onclick="toggleHabit(this)">
-                        <div class="switch-container"><div class="switch-pointer"></div></div>
-                        <div class="node-header">
-                            <div class="icon-wrapper"><i class="fa-solid fa-clock"></i></div>
-                            <div class="node-title"><h3>The 20-20-20 Shift</h3></div>
-                        </div>
-                        <div class="node-body"><p>Every 20 minutes, observe an object at 20 feet distance for 20 seconds.</p></div>
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
@@ -377,20 +389,35 @@
             posterCard.classList.toggle('flipped');
         }
 
-        function triggerRisk(element, intensityValue) {
-            const bar = element.querySelector('.danger-fill');
-            if (element.classList.contains('activated-risk')) {
-                element.classList.remove('activated-risk');
-                bar.style.width = '0%';
-            } else {
-                element.classList.add('activated-risk');
-                bar.style.width = intensityValue + '%';
-            }
-        }
+        // GESTIONE DEI RISCHI TRAMITE EVENTI ASINCRONI NATIVI (Niente lag di scorrimento)
+        document.querySelectorAll('.risk-node').forEach(node => {
+            node.addEventListener('click', function(e) {
+                // Se l'utente sta muovendo velocemente il dito per scorrere, previene falsi click
+                const bar = this.querySelector('.danger-fill');
+                const intensity = this.getAttribute('data-intensity');
+                
+                if (this.classList.contains('activated-risk')) {
+                    this.classList.remove('activated-risk');
+                    bar.style.width = '0%';
+                } else {
+                    this.classList.add('activated-risk');
+                    bar.style.width = intensity + '%';
+                }
+            });
+        });
 
-        function toggleHabit(element) {
-            element.classList.toggle('habit-on');
-        }
+        // GESTIONE DELLE ABITUDINI
+        document.querySelectorAll('.habit-node').forEach(node => {
+            node.addEventListener('click', function() {
+                const fill = this.querySelector('.protection-fill');
+                this.classList.toggle('habit-on');
+                if(this.classList.contains('habit-on')) {
+                    fill.style.width = '100%';
+                } else {
+                    fill.style.width = '0%';
+                }
+            });
+        });
     </script>
 
 </body>
