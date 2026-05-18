@@ -6,7 +6,7 @@
     <title>Digital Wellbeing Interactive Poster | Carmine Pio Fiola</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght=700&family=Outfit:wght@300;400;600;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -27,11 +27,11 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 20px 15px;
+            padding: 15px;
             position: relative;
         }
 
-        /* SFONDO TRIDIMENSIONALE */
+        /* SFONDO */
         body::before {
             content: '';
             position: absolute;
@@ -47,146 +47,151 @@
         .top-nav {
             width: 100%; max-width: 450px;
             background: rgba(255, 255, 255, 0.02);
-            padding: 15px; border-radius: 16px;
+            padding: 12px; border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             text-align: center;
             backdrop-filter: blur(12px);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
-        .top-nav h2 { font-family: 'Syncopate'; font-size: 0.8rem; color: var(--accent); letter-spacing: 1.5px; }
-        .top-nav p { font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; margin-top: 4px; }
+        .top-nav h2 { font-family: 'Syncopate'; font-size: 0.75rem; color: var(--accent); letter-spacing: 1.5px; }
+        .top-nav p { font-size: 0.55rem; opacity: 0.6; text-transform: uppercase; margin-top: 4px; }
 
-        /* POSTER CONTAINER */
+        /* MAIN SCENE CON ALTEZZA FLUIDA SU MOBILE */
         .poster-scene {
             width: 100%; max-width: 450px;
-            height: 720px; 
+            height: 680px; 
             perspective: 2000px; 
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 480px) {
+            .poster-scene { height: 75vh; } /* Si adatta proporzionalmente sugli smartphone */
         }
 
         .card {
             width: 100%; height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .card.flipped { transform: rotateY(180deg); }
 
         .face {
             position: absolute; width: 100%; height: 100%;
             backface-visibility: hidden; -webkit-backface-visibility: hidden;
-            border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 20px 16px; display: flex; flex-direction: column;
-            background: var(--panel-bg); box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+            border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px; display: flex; flex-direction: column;
+            background: var(--panel-bg); box-shadow: 0 15px 40px rgba(0,0,0,0.6);
         }
 
         .front { border-top: 6px solid var(--danger); }
         .back { border-top: 6px solid var(--safe); transform: rotateY(180deg); }
 
-        h1 { font-family: 'Syncopate'; font-size: 1.1rem; text-align: center; margin-bottom: 15px; }
+        h1 { font-family: 'Syncopate'; font-size: 1rem; text-align: center; margin-bottom: 12px; letter-spacing: 0.5px; }
 
-        /* SCROLL CONTAINER SBLOCCATO E FLUIDO */
+        /* CONTENITORE DI SCORRIMENTO TOTALMENTE SBLOCCATO */
         .list-container { 
             flex: 1; 
             display: flex; 
             flex-direction: column; 
             gap: 10px; 
             overflow-y: auto; 
-            padding-right: 4px;
-            -webkit-overflow-scrolling: touch; /* Forza lo scorrimento inerziale nativo su iOS */
+            padding-right: 2px;
+            /* Proprietà fondamentali per scorrimento fluido touch nativo */
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; 
         }
         .list-container::-webkit-scrollbar { width: 3px; }
         .list-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
 
-        /* INTERACTIVE ITEMS (OTTIMIZZATI PER LO SCORRIMENTO TOUCH) */
+        /* MODULO STATICO (NON INTERCETTA LO SCROLL) */
         .interactive-node {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 14px; padding: 12px;
+            border-radius: 12px; padding: 12px;
             display: flex; flex-direction: column; gap: 6px;
-            cursor: pointer; transition: all 0.2s ease;
             position: relative;
-            /* FIX CRUCIALE: Impedisce al click di bloccare lo scroll verticale del dito */
+            /* Permette lo scorrimento del dito senza alcun lag preventivo */
             touch-action: pan-y; 
         }
         
-        .node-header { display: flex; align-items: center; gap: 10px; padding-right: 60px; }
+        .node-header { display: flex; align-items: center; gap: 10px; padding-right: 75px; }
 
         .icon-wrapper {
-            width: 32px; height: 32px; border-radius: 8px;
+            width: 30px; height: 30px; border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem; background: rgba(255, 255, 255, 0.02);
+            font-size: 0.85rem; background: rgba(255, 255, 255, 0.02);
             flex-shrink: 0;
         }
-        .front .icon-wrapper { color: var(--danger); border: 1px solid rgba(255, 71, 87, 0.2); }
-        .back .icon-wrapper { color: var(--safe); border: 1px solid rgba(46, 213, 115, 0.2); }
+        .front .icon-wrapper { color: var(--danger); border: 1px solid rgba(255, 71, 87, 0.15); }
+        .back .icon-wrapper { color: var(--safe); border: 1px solid rgba(46, 213, 115, 0.15); }
 
-        .node-title h3 { font-size: 0.75rem; font-family: 'Syncopate'; color: #fff; }
-        .node-body p { font-size: 0.7rem; color: #a0a0a5; line-height: 1.4; font-weight: 300; }
+        .node-title h3 { font-size: 0.72rem; font-family: 'Syncopate'; color: #fff; }
+        .node-body p { font-size: 0.68rem; color: #a0a0a5; line-height: 1.35; font-weight: 300; }
 
-        /* RISKS INTERACTION */
+        /* PULSANTI TARGET DEDICATI (RISOLVONO IL BLOCCO MOBILE) */
+        .action-trigger-btn {
+            position: absolute; right: 12px; top: 12px;
+            width: 50px; height: 32px; 
+            border-radius: 6px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 10; font-family: 'Syncopate'; font-size: 0.65rem;
+            transition: all 0.2s ease;
+        }
+
+        /* Stile pulsante rischi */
+        .front .action-trigger-btn {
+            background: rgba(255, 71, 87, 0.1); color: var(--danger);
+            border: 1px solid rgba(255, 71, 87, 0.2);
+        }
+        /* Stile pulsante soluzioni (Switch) */
+        .back .action-trigger-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .back .action-trigger-btn::after {
+            content: ''; width: 12px; height: 12px; background: #fff;
+            border-radius: 50%; position: absolute; left: 4px; transition: transform 0.2s;
+        }
+
+        /* GRAFICHE DI STATO INFERIORI */
         .danger-gauge-bar {
-            width: 100%; height: 5px; background: rgba(255, 255, 255, 0.05);
+            width: 100%; height: 4px; background: rgba(255, 255, 255, 0.04);
             border-radius: 2px; overflow: hidden; margin-top: 2px;
         }
-        .danger-fill {
-            height: 100%; width: 0%; background: var(--danger);
-            transition: width 0.5s ease;
-        }
-        .risk-status {
-            position: absolute; right: 12px; top: 12px;
-            font-family: 'Syncopate'; font-size: 0.5rem;
-            padding: 2px 5px; border-radius: 4px;
-            background: rgba(255, 71, 87, 0.1); color: var(--danger);
-            opacity: 0.5; transition: all 0.2s;
-        }
+        .danger-fill { height: 100%; width: 0%; background: var(--danger); transition: width 0.4s ease; }
 
-        .interactive-node.activated-risk {
-            border-color: rgba(255, 71, 87, 0.4);
-            background: rgba(255, 71, 87, 0.04);
-        }
-        .interactive-node.activated-risk .risk-status { opacity: 1; background: var(--danger); color: #000; font-weight: 900; }
-        .interactive-node.activated-risk .icon-wrapper { background: var(--danger); color: #000; }
-
-        /* HABITS INTERACTION */
-        .switch-container {
-            position: absolute; right: 12px; top: 14px;
-            width: 32px; height: 16px; background: rgba(255,255,255,0.1);
-            border-radius: 10px; padding: 2px;
-        }
-        .switch-pointer {
-            width: 12px; height: 12px; background: #fff;
-            border-radius: 50%; transition: transform 0.2s ease;
-        }
         .protection-bar {
-            width: 100%; height: 5px; background: rgba(255, 255, 255, 0.05);
-            border-radius: 2px; overflow: hidden; opacity: 0.2; margin-top: 2px;
+            width: 100%; height: 4px; background: rgba(255, 255, 255, 0.04);
+            border-radius: 2px; overflow: hidden; opacity: 0.2; margin-top: 2px; transition: opacity 0.2s;
         }
         .protection-fill { height: 100%; width: 0%; background: var(--safe); transition: width 0.4s ease; }
 
-        .interactive-node.habit-on {
-            border-color: rgba(46, 213, 115, 0.4);
-            background: rgba(46, 213, 115, 0.04);
-        }
-        .interactive-node.habit-on .switch-container { background: var(--safe); }
-        .interactive-node.habit-on .switch-pointer { transform: translateX(16px); }
+        /* STATI ATTIVI (ATTIVATI SOLO VIA SOFTWARE DAL PULSANTE) */
+        .interactive-node.activated-risk { border-color: rgba(255, 71, 87, 0.4); background: rgba(255, 71, 87, 0.03); }
+        .interactive-node.activated-risk .action-trigger-btn { background: var(--danger); color: #000; border-color: var(--danger); }
+        .interactive-node.activated-risk .icon-wrapper { background: var(--danger); color: #000; }
+
+        .interactive-node.habit-on { border-color: rgba(46, 213, 115, 0.4); background: rgba(46, 213, 115, 0.03); }
+        .interactive-node.habit-on .action-trigger-btn { background: var(--safe); border-color: var(--safe); }
+        .interactive-node.habit-on .action-trigger-btn::after { transform: translateX(28px); }
         .interactive-node.habit-on .protection-bar { opacity: 1; }
         .interactive-node.habit-on .protection-fill { width: 100%; }
         .interactive-node.habit-on h3 { color: var(--safe); }
 
-        /* BUTTONS */
+        /* ROTAZIONE POSTER */
         .flip-trigger-btn {
             background: transparent; border: 1px dashed var(--accent);
-            color: var(--accent); padding: 12px; border-radius: 12px;
-            font-family: 'Syncopate'; font-size: 0.7rem; letter-spacing: 1px;
-            cursor: pointer; margin-top: 15px; width: 100%;
+            color: var(--accent); padding: 10px; border-radius: 10px;
+            font-family: 'Syncopate'; font-size: 0.65rem; letter-spacing: 1px;
+            cursor: pointer; margin-top: 12px; width: 100%;
             display: flex; align-items: center; justify-content: center; gap: 8px;
+            flex-shrink: 0;
         }
 
         .civic-note {
-            text-align: center; font-size: 0.65rem; opacity: 0.5;
-            max-width: 360px; line-height: 1.5; margin-top: 10px;
+            text-align: center; font-size: 0.6rem; opacity: 0.5;
+            max-width: 360px; line-height: 1.4; margin-top: 8px;
         }
     </style>
 </head>
@@ -194,7 +199,7 @@
 
     <div class="top-nav">
         <h2>CARMINE PIO FIOLA</h2>
-        <p>Civic Education • Interactive Wellbeing Poster</p>
+        <p>Civic Education • Mobile Fluid Interactive Poster</p>
     </div>
 
     <div class="poster-scene">
@@ -205,8 +210,8 @@
                 <h1 style="color: var(--danger)"><i class="fa-solid fa-triangle-exclamation"></i> 7 DIGITAL RISKS</h1>
                 <div class="list-container">
                     
-                    <div class="interactive-node" onclick="triggerRisk(this, 95)">
-                        <span class="risk-status">CRITICAL</span>
+                    <div class="interactive-node" id="risk1">
+                        <div class="action-trigger-btn" onclick="triggerRisk('risk1', 95)"><i class="fa-solid fa-skull"></i></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-moon"></i></div>
                             <div class="node-title"><h3>Sleep Debt</h3></div>
@@ -215,8 +220,8 @@
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 75)">
-                        <span class="risk-status">HIGH RISK</span>
+                    <div class="interactive-node" id="risk2">
+                        <div class="action-trigger-btn" onclick="triggerRisk('risk2', 75)"><i class="fa-solid fa-skull"></i></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-hand-dots"></i></div>
                             <div class="node-title"><h3>Joint Strain</h3></div>
@@ -225,8 +230,8 @@
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 90)">
-                        <span class="risk-status">CRITICAL</span>
+                    <div class="interactive-node" id="risk3">
+                        <div class="action-trigger-btn" onclick="triggerRisk('risk3', 90)"><i class="fa-solid fa-skull"></i></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-user-doctor"></i></div>
                             <div class="node-title"><h3>Tech-Neck</h3></div>
@@ -235,8 +240,8 @@
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 80)">
-                        <span class="risk-status">HIGH RISK</span>
+                    <div class="interactive-node" id="risk4">
+                        <div class="action-trigger-btn" onclick="triggerRisk('risk4', 80)"><i class="fa-solid fa-skull"></i></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-weight-scale"></i></div>
                             <div class="node-title"><h3>Sedentary State</h3></div>
@@ -245,8 +250,8 @@
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 60)">
-                        <span class="risk-status">WARNING</span>
+                    <div class="interactive-node" id="risk5">
+                        <div class="action-trigger-btn" onclick="triggerRisk('risk5', 60)"><i class="fa-solid fa-skull"></i></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-ear-deaf"></i></div>
                             <div class="node-title"><h3>Hearing Atrophy</h3></div>
@@ -255,8 +260,8 @@
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 55)">
-                        <span class="risk-status">WARNING</span>
+                    <div class="interactive-node" id="risk6">
+                        <div class="action-trigger-btn" onclick="triggerRisk('risk6', 55)"><i class="fa-solid fa-skull"></i></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-fire"></i></div>
                             <div class="node-title"><h3>Thermal Lesions</h3></div>
@@ -265,8 +270,8 @@
                         <div class="danger-gauge-bar"><div class="danger-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="triggerRisk(this, 85)">
-                        <span class="risk-status">HIGH RISK</span>
+                    <div class="interactive-node" id="risk7">
+                        <div class="action-trigger-btn" onclick="triggerRisk('risk7', 85)"><i class="fa-solid fa-skull"></i></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-eye-slash"></i></div>
                             <div class="node-title"><h3>Ocular Fatigue</h3></div>
@@ -284,8 +289,8 @@
                 <h1 style="color: var(--safe)"><i class="fa-solid fa-shield-halved"></i> 7 SMART HABITS</h1>
                 <div class="list-container">
                     
-                    <div class="interactive-node" onclick="toggleHabit(this)">
-                        <div class="switch-container"><div class="switch-pointer"></div></div>
+                    <div class="interactive-node" id="habit1">
+                        <div class="action-trigger-btn" onclick="toggleHabit('habit1')"></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-circle-half-stroke"></i></div>
                             <div class="node-title"><h3>Spectral Filters</h3></div>
@@ -294,8 +299,8 @@
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
-                        <div class="switch-container"><div class="switch-pointer"></div></div>
+                    <div class="interactive-node" id="habit2">
+                        <div class="action-trigger-btn" onclick="toggleHabit('habit2')"></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-microphone-lines"></i></div>
                             <div class="node-title"><h3>Voice Transcription</h3></div>
@@ -304,8 +309,8 @@
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
-                        <div class="switch-container"><div class="switch-pointer"></div></div>
+                    <div class="interactive-node" id="habit3">
+                        <div class="action-trigger-btn" onclick="toggleHabit('habit3')"></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-chair"></i></div>
                             <div class="node-title"><h3>Ergonomic Angles</h3></div>
@@ -314,8 +319,8 @@
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
-                        <div class="switch-container"><div class="switch-pointer"></div></div>
+                    <div class="interactive-node" id="habit4">
+                        <div class="action-trigger-btn" onclick="toggleHabit('habit4')"></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-person-running"></i></div>
                             <div class="node-title"><h3>Kinetic Counters</h3></div>
@@ -324,8 +329,8 @@
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
-                        <div class="switch-container"><div class="switch-pointer"></div></div>
+                    <div class="interactive-node" id="habit5">
+                        <div class="action-trigger-btn" onclick="toggleHabit('habit5')"></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-volume-low"></i></div>
                             <div class="node-title"><h3>The 60/60 Rule</h3></div>
@@ -334,8 +339,8 @@
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
-                        <div class="switch-container"><div class="switch-pointer"></div></div>
+                    <div class="interactive-node" id="habit6">
+                        <div class="action-trigger-btn" onclick="toggleHabit('habit6')"></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-laptop"></i></div>
                             <div class="node-title"><h3>Isolation Barriers</h3></div>
@@ -344,8 +349,8 @@
                         <div class="protection-bar"><div class="protection-fill"></div></div>
                     </div>
 
-                    <div class="interactive-node" onclick="toggleHabit(this)">
-                        <div class="switch-container"><div class="switch-pointer"></div></div>
+                    <div class="interactive-node" id="habit7">
+                        <div class="action-trigger-btn" onclick="toggleHabit('habit7')"></div>
                         <div class="node-header">
                             <div class="icon-wrapper"><i class="fa-solid fa-clock"></i></div>
                             <div class="node-title"><h3>The 20-20-20 Shift</h3></div>
@@ -363,7 +368,7 @@
 
     <p class="civic-note">
         Physical health optimization defines conscious digital citizenship. <br>
-        Analyze system vulnerabilities and activate personal defenses.
+        Touch the triggers to isolate anomalies and activate system defense filters.
     </p>
 
     <script>
@@ -373,8 +378,11 @@
             posterCard.classList.toggle('flipped');
         }
 
-        function triggerRisk(element, intensityValue) {
+        // Funzione modificata: riceve l'ID esatto e agisce in modo mirato
+        function triggerRisk(nodeId, intensityValue) {
+            const element = document.getElementById(nodeId);
             const bar = element.querySelector('.danger-fill');
+            
             if (element.classList.contains('activated-risk')) {
                 element.classList.remove('activated-risk');
                 bar.style.width = '0%';
@@ -384,7 +392,9 @@
             }
         }
 
-        function toggleHabit(element) {
+        // Funzione modificata per i toggle switch delle abitudini
+        function toggleHabit(nodeId) {
+            const element = document.getElementById(nodeId);
             element.classList.toggle('habit-on');
         }
     </script>
