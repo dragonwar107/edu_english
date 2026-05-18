@@ -55,7 +55,7 @@
         .top-nav h2 { font-family: 'Syncopate'; font-size: 0.85rem; color: var(--accent); letter-spacing: 1.5px; }
         .top-nav p { font-size: 0.6rem; opacity: 0.6; text-transform: uppercase; margin-top: 4px; letter-spacing: 1px; }
 
-        /* NUOVA STATISTICA DINAMICA (DASHBOARD SCORE) */
+        /* DASHBOARD SCORE */
         .live-status-bar {
             width: 100%; max-width: 450px;
             background: rgba(255, 255, 255, 0.01);
@@ -232,10 +232,77 @@
         .interactive-node.habit-on h3 { color: var(--safe); }
         .interactive-node.habit-on .icon-wrapper { background: rgba(46, 213, 115, 0.2); border-color: var(--safe); }
 
+        /* SEZIONE CIVIC NOTE & PLEDGE BOX */
+        .civic-footer {
+            width: 100%; max-width: 450px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 10px;
+            backdrop-filter: blur(10px);
+        }
         .civic-note {
-            text-align: center; font-size: 0.65rem; opacity: 0.5;
-            max-width: 380px; line-height: 1.5; margin-top: 10px;
-            letter-spacing: 0.3px;
+            font-size: 0.7rem; opacity: 0.6;
+            line-height: 1.5; margin-bottom: 12px;
+        }
+        .pledge-btn {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.1), rgba(0, 242, 255, 0.2));
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: 'Syncopate';
+            font-size: 0.65rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pledge-btn:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* STRUTTURA DEL POP-UP (MODAL WINDOW) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 8, 0.85); backdrop-filter: blur(8px);
+            z-index: 100; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+        .modal-overlay.show { opacity: 1; pointer-events: auto; }
+        
+        .modal-content {
+            background: #111116; border: 2px solid var(--accent);
+            border-radius: 20px; padding: 25px 20px; max-width: 400px; width: 100%;
+            text-align: center; box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+            transform: scale(0.9); transition: transform 0.3s ease;
+            position: relative;
+        }
+        .modal-overlay.show .modal-content { transform: scale(1); }
+
+        .modal-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 15px; animation: pulse 2s infinite; }
+        .modal-content h4 { font-family: 'Syncopate'; font-size: 0.9rem; color: #fff; margin-bottom: 10px; }
+        .modal-content p { font-size: 0.8rem; color: #a0a0a5; line-height: 1.5; margin-bottom: 20px; font-weight: 300; }
+        
+        .close-modal-btn {
+            background: #fff; color: #000; border: none; font-family: 'Syncopate';
+            font-size: 0.65rem; padding: 10px 20px; border-radius: 8px; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .close-modal-btn:hover { background: var(--accent); box-shadow: 0 0 10px rgba(0,242,255,0.3); }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.08); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
@@ -246,7 +313,7 @@
         <p>Civic Education • Digital Wellbeing Interactive flyer</p>
     </div>
 
-    <!-- PANNELLO STATISTICHE LIVE (Aggiunto per stupire la prof!) -->
+    <!-- PANNELLO STATISTICHE LIVE -->
     <div class="live-status-bar">
         <div class="stat-box">
             <i class="fa-solid fa-radiation"></i> Risks Analyzed: <span id="riskCount">0/7</span>
@@ -440,10 +507,30 @@
 
     </div>
 
-    <p class="civic-note">
-        Physical health optimization defines conscious digital citizenship. <br>
-        Switch tabs to analyze system updates and trigger personal digital barriers.
-    </p>
+    <!-- NOTA DI EDUCAZIONE CIVICA IN INGLESE CON IL PATTO DIGITALE -->
+    <div class="civic-footer">
+        <p class="civic-note">
+            Physical health optimization defines conscious digital citizenship. <br>
+            Switch tabs to analyze system updates and trigger personal digital barriers.
+        </p>
+        <button class="pledge-btn" onclick="toggleModal(true)">
+            <i class="fa-solid fa-file-signature"></i> Sign Digital Pledge
+        </button>
+    </div>
+
+    <!-- POP-UP DI CONFERMA IN INGLESE -->
+    <div class="modal-overlay" id="pledgeModal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fa-solid fa-award"></i>
+            </div>
+            <h4>Pledge Signed Successfully!</h4>
+            <p>
+                Thank you! By accepting this pledge, you commit to promoting digital wellbeing, protecting your physical and mental health, and becoming a fully responsible digital citizen.
+            </p>
+            <button class="close-modal-btn" onclick="toggleModal(false)">Acknowledge</button>
+        </div>
+    </div>
 
     <script>
         function switchTab(tabName) {
@@ -465,12 +552,10 @@
             }
         }
 
-        // AGGIORNAMENTO LIVE DEI CONTATORI
         function updateDashboardStats() {
             const activatedRisks = document.querySelectorAll('.activated-risk').length;
             document.getElementById('riskCount').innerText = `${activatedRisks}/7`;
             
-            // Effetto pulsazione se ci sono rischi attivi
             if(activatedRisks > 0) {
                 document.getElementById('riskCount').style.textShadow = '0 0 8px var(--danger)';
             } else {
@@ -485,6 +570,15 @@
                 document.getElementById('safetyScore').style.textShadow = '0 0 8px var(--safe)';
             } else {
                 document.getElementById('safetyScore').style.textShadow = 'none';
+            }
+        }
+
+        function toggleModal(show) {
+            const modal = document.getElementById('pledgeModal');
+            if (show) {
+                modal.classList.add('show');
+            } else {
+                modal.classList.remove('show');
             }
         }
 
