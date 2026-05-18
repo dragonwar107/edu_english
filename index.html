@@ -66,14 +66,6 @@
             margin-bottom: 20px;
             text-align: center;
             backdrop-filter: blur(10px);
-            position: relative;
-        }
-        .top-nav::before {
-            content: 'INFOGRAPHIC // 01';
-            position: absolute;
-            top: -8px; left: 20px;
-            font-size: 0.5rem; font-family: 'Syncopate';
-            background: var(--bg-dark); padding: 0 5px; color: var(--accent);
         }
         .top-nav h2 { font-family: 'Syncopate'; font-size: 0.75rem; color: var(--accent); letter-spacing: 1px; }
         .top-nav p { font-size: 0.65rem; opacity: 0.7; text-transform: uppercase; margin-top: 4px; }
@@ -125,81 +117,62 @@
         h1 { font-family: 'Syncopate'; font-size: 1.1rem; text-align: center; margin-bottom: 20px; letter-spacing: 1px; }
 
         /* CONTENT LIST */
-        .list-container { flex: 1; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; padding-right: 5px; }
+        .list-container { flex: 1; display: flex; flex-direction: column; gap: 18px; overflow-y: auto; padding-right: 5px; }
 
         .item {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            padding-bottom: 10px;
+            align-items: flex-start;
+            gap: 12px;
+            padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* ILLUSTRATION BLOCK CONTAINER */
-        .illustration-block {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            flex-shrink: 0;
+        .icon-box {
+            width: 32px; height: 32px;
+            border-radius: 8px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center; justify-content: center;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.03);
+            flex-shrink: 0;
+            margin-top: 2px;
         }
 
-        .shape { position: absolute; border-radius: 50%; }
+        .front .icon-box { color: var(--danger); border: 1px solid rgba(255, 71, 87, 0.3); }
+        .back .icon-box { color: var(--safe); border: 1px solid rgba(46, 213, 115, 0.3); }
 
-        /* FRONT ILLUSTRATIONS (RISKS - RED/DARK THEME) */
-        .ill-r1 { background: linear-gradient(45deg, #2c1a3a, #0f0c1b); }
-        .ill-r1 .shape { width: 25px; height: 25px; background: var(--danger); top: -5px; right: -5px; filter: blur(4px); }
-        
-        .ill-r2 { background: linear-gradient(135deg, #2d1419, #120507); }
-        .ill-r2 .shape { width: 30px; height: 6px; background: var(--danger); transform: rotate(-45deg); border-radius: 3px; }
+        .text-box { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        .text-box h3 { font-size: 0.75rem; font-family: 'Syncopate'; color: #fff; }
+        .text-box p { font-size: 0.72rem; color: #b0b0b0; line-height: 1.4; font-weight: 300; }
 
-        .ill-r3 { background: linear-gradient(to bottom, #1f1126, #09030c); }
-        .ill-r3 .shape { width: 16px; height: 35px; border-left: 3px solid var(--danger); border-top: 3px solid var(--danger); border-radius: 8px 0 0 0; transform: rotate(15deg); }
+        /* NEW GRAPHIC ELEMENT UNDER THE TEXT */
+        .item-graphic {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            margin-top: 6px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
 
-        .ill-r4 { background: linear-gradient(180deg, #1a1a24, #0d0d13); }
-        .ill-r4 .shape { width: 22px; height: 22px; border: 3px solid var(--danger); border-radius: 4px; transform: rotate(45deg); }
+        .item-graphic::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            border-radius: 3px;
+        }
 
-        .ill-r5 { background: linear-gradient(45deg, #33141a, #140508); }
-        .ill-r5 .shape { width: 26px; height: 26px; border: 2px dashed var(--danger); animation: spin 8s linear infinite; }
+        /* Front items graphics (Risk levels bars) */
+        .front .g-high::after { width: 85%; background: linear-gradient(90deg, var(--danger), #ff7675); }
+        .front .g-max::after { width: 100%; background: linear-gradient(90deg, var(--danger), #d63031); }
+        .front .g-mid::after { width: 65%; background: linear-gradient(90deg, var(--danger), #e17055); }
 
-        .ill-r6 { background: #1c0d0f; }
-        .ill-r6 .shape { width: 100%; height: 50%; bottom: 0; background: linear-gradient(to top, var(--danger), transparent); }
-
-        .ill-r7 { background: #0c0d14; }
-        .ill-r7 .shape { width: 30px; height: 15px; border: 2px solid var(--danger); border-radius: 50% / 100% 100% 0 0; transform: rotate(180deg); }
-
-        /* BACK ILLUSTRATIONS (SOLUTIONS - GREEN/BLUE THEME) */
-        .ill-s1 { background: linear-gradient(135deg, #0f2b26, #051411); }
-        .ill-s1 .shape { width: 20px; height: 20px; background: var(--safe); filter: blur(2px); }
-
-        .ill-s2 { background: linear-gradient(45deg, #0d243a, #040f1a); }
-        .ill-s2 .shape { width: 25px; height: 3px; background: var(--safe); box-shadow: 0 6px 0 var(--safe), 0 -6px 0 var(--safe); }
-
-        .ill-s3 { background: #0b1c16; }
-        .ill-s3 .shape { width: 24px; height: 24px; border: 2px solid var(--safe); border-radius: 6px; }
-
-        .ill-s4 { background: linear-gradient(to right, #0a2419, #030d09); }
-        .ill-s4 .shape { width: 18px; height: 18px; background: var(--safe); transform: skewX(20deg); border-radius: 2px; }
-
-        .ill-s5 { background: #08171d; }
-        .ill-s5 .shape { width: 20px; height: 20px; border-radius: 50%; border: 3px solid transparent; border-top-color: var(--safe); border-bottom-color: var(--safe); animation: spin 4s linear infinite; }
-
-        .ill-s6 { background: linear-gradient(135deg, #11291f, #050f0b); }
-        .ill-s6 .shape { width: 32px; height: 8px; background: var(--safe); bottom: 10px; border-radius: 2px; }
-
-        .ill-s7 { background: #0d212b; }
-        .ill-s7 .shape { width: 20px; height: 20px; border: 2px solid var(--safe); border-radius: 50%; }
-        .ill-s7 .shape::after { content:''; position: absolute; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; top: 5px; left: 5px; }
+        /* Back items graphics (Protection levels bars) */
+        .back .g-fill::after { width: 100%; background: linear-gradient(90deg, var(--safe), #55efc4); }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        .text-box h3 { font-size: 0.75rem; font-family: 'Syncopate'; margin-bottom: 4px; color: #fff; }
-        .text-box p { font-size: 0.72rem; color: #b0b0b0; line-height: 1.4; font-weight: 300; }
 
         /* PULSING CLICK HINT */
         @keyframes pulse {
@@ -224,7 +197,6 @@
             max-width: 350px; 
             line-height: 1.5;
             color: #fff;
-            position: relative;
         }
 
         .list-container::-webkit-scrollbar { width: 3px; }
@@ -251,59 +223,66 @@
                 <div class="list-container">
                     
                     <div class="item">
-                        <div class="illustration-block ill-r1">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-moon" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-moon"></i></div>
+                        <div class="text-box">
+                            <h3>Sleep Debt</h3>
+                            <p>Blue light inhibits melatonin production, disrupting circadian rhythms and severely lowering sleep quality.</p>
+                            <div class="item-graphic g-max"></div>
                         </div>
-                        <div class="text-box"><h3>Sleep Debt</h3><p>Blue light inhibits melatonin production, disrupting circadian rhythms and severely lowering sleep quality.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-r2">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-hand-dots" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-hand-dots"></i></div>
+                        <div class="text-box">
+                            <h3>Joint Strain</h3>
+                            <p>Repetitive texting and typing cause inflammation in thumb and wrist tendons, known as "texting thumb".</p>
+                            <div class="item-graphic g-high"></div>
                         </div>
-                        <div class="text-box"><h3>Joint Strain</h3><p>Repetitive texting and typing cause inflammation in thumb and wrist tendons, known as "texting thumb".</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-r3">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-user-doctor" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-user-doctor"></i></div>
+                        <div class="text-box">
+                            <h3>Tech-Neck</h3>
+                            <p>Tilting your head forward for devices puts up to 60 lbs of pressure on the spine, causing chronic neck pain.</p>
+                            <div class="item-graphic g-max"></div>
                         </div>
-                        <div class="text-box"><h3>Tech-Neck</h3><p>Tilting your head forward for devices puts up to 60 lbs of pressure on the spine, causing chronic neck pain.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-r4">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-weight-scale" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-weight-scale"></i></div>
+                        <div class="text-box">
+                            <h3>Sedentary Lifestyle</h3>
+                            <p>Excessive screen time replaces physical activity, slowing metabolism and increasing cardiovascular risks.</p>
+                            <div class="item-graphic g-high"></div>
                         </div>
-                        <div class="text-box"><h3>Sedentary Lifestyle</h3><p>Excessive screen time replaces physical activity, slowing metabolism and increasing cardiovascular risks.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-r5">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-ear-deaf" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-ear-deaf"></i></div>
+                        <div class="text-box">
+                            <h3>Hearing Damage</h3>
+                            <p>High-volume headphone use for long periods destroys inner ear hair cells, causing premature hearing loss.</p>
+                            <div class="item-graphic g-mid"></div>
                         </div>
-                        <div class="text-box"><h3>Hearing Damage</h3><p>High-volume headphone use for long periods destroys inner ear hair cells, causing premature hearing loss.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-r6">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-fire" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-fire"></i></div>
+                        <div class="text-box">
+                            <h3>Toasted Skin</h3>
+                            <p>Prolonged laptop use on bare skin causes infrared heat damage, leading to permanent pigmentation and lesions.</p>
+                            <div class="item-graphic g-mid"></div>
                         </div>
-                        <div class="text-box"><h3>Toasted Skin</h3><p>Prolonged laptop use on bare skin causes infrared heat damage, leading to permanent pigmentation and lesions.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-r7">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-eye-slash" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-eye-slash"></i></div>
+                        <div class="text-box">
+                            <h3>Digital Eye Strain</h3>
+                            <p>Staring at close screens reduces blink rate, leading to severe dry eyes, fatigue, and blurred vision.</p>
+                            <div class="item-graphic g-max"></div>
                         </div>
-                        <div class="text-box"><h3>Digital Eye Strain</h3><p>Staring at close screens reduces blink rate, leading to severe dry eyes, fatigue, and blurred vision.</p></div>
                     </div>
 
                 </div>
@@ -316,59 +295,66 @@
                 <div class="list-container">
                     
                     <div class="item">
-                        <div class="illustration-block ill-s1">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-circle-half-stroke" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-circle-half-stroke"></i></div>
+                        <div class="text-box">
+                            <h3>Blue Light Filters</h3>
+                            <p>Enable Night Shift or wear blue light glasses at least 2 hours before bed to protect natural sleep cycles.</p>
+                            <div class="item-graphic g-fill"></div>
                         </div>
-                        <div class="text-box"><h3>Blue Light Filters</h3><p>Enable Night Shift or wear blue light glasses at least 2 hours before bed to protect natural sleep cycles.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-s2">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-microphone-lines" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-microphone-lines"></i></div>
+                        <div class="text-box">
+                            <h3>Voice Dictation</h3>
+                            <p>Alternate typing with voice commands and dictation to rest your hand tendons and prevent joint wear.</p>
+                            <div class="item-graphic g-fill"></div>
                         </div>
-                        <div class="text-box"><h3>Voice Dictation</h3><p>Alternate typing with voice commands and dictation to rest your hand tendons and prevent joint wear.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-s3">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-chair" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-chair"></i></div>
+                        <div class="text-box">
+                            <h3>Ergonomic Setup</h3>
+                            <p>Keep the monitor at eye level and use a chair with lumbar support. Keep your feet flat on the floor.</p>
+                            <div class="item-graphic g-fill"></div>
                         </div>
-                        <div class="text-box"><h3>Ergonomic Setup</h3><p>Keep the monitor at eye level and use a chair with lumbar support. Keep your feet flat on the floor.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-s4">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-person-running" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-person-running"></i></div>
+                        <div class="text-box">
+                            <h3>Regular Exercise</h3>
+                            <p>Offset digital hours with 30 minutes of daily movement. Sports help reduce overall digital stress.</p>
+                            <div class="item-graphic g-fill"></div>
                         </div>
-                        <div class="text-box"><h3>Regular Exercise</h3><p>Offset digital hours with 30 minutes of daily movement. Sports help reduce overall digital stress.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-s5">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-volume-low" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-volume-low"></i></div>
+                        <div class="text-box">
+                            <h3>60/60 Rule</h3>
+                            <p>Keep the volume below 60% of the maximum and limit headphone use to 60 minutes per session.</p>
+                            <div class="item-graphic g-fill"></div>
                         </div>
-                        <div class="text-box"><h3>60/60 Rule</h3><p>Keep the volume below 60% of the maximum and limit headphone use to 60 minutes per session.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-s6">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-laptop" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-laptop"></i></div>
+                        <div class="text-box">
+                            <h3>Lap Protection</h3>
+                            <p>Always use a desk or a cooling pad for laptops. Avoid direct skin contact to prevent heat damage.</p>
+                            <div class="item-graphic g-fill"></div>
                         </div>
-                        <div class="text-box"><h3>Lap Protection</h3><p>Always use a desk or a cooling pad for laptops. Avoid direct skin contact to prevent heat damage.</p></div>
                     </div>
                     
                     <div class="item">
-                        <div class="illustration-block ill-s7">
-                            <div class="shape"></div>
-                            <i class="fa-solid fa-clock" style="color: #fff; z-index: 2; font-size: 0.9rem;"></i>
+                        <div class="icon-box"><i class="fa-solid fa-clock"></i></div>
+                        <div class="text-box">
+                            <h3>20-20-20 Rule</h3>
+                            <p>Every 20 minutes, look at an object 20 feet away for 20 seconds. This drastically relaxes eye muscles.</p>
+                            <div class="item-graphic g-fill"></div>
                         </div>
-                        <div class="text-box"><h3>20-20-20 Rule</h3><p>Every 20 minutes, look at an object 20 feet away for 20 seconds. This drastically relaxes eye muscles.</p></div>
                     </div>
 
                 </div>
